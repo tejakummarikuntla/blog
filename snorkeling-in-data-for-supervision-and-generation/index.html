@@ -9,7 +9,7 @@
     <meta name="HandheldFriendly" content="True" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <link rel="stylesheet" type="text/css" href="../assets/built/screen.css@v=d68cd2a12d.css" />
+    <link rel="stylesheet" type="text/css" href="../assets/built/screen.css@v=7e2804ec5d.css" />
 
     <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon" />
     <link rel="canonical" href="index.html" />
@@ -23,7 +23,7 @@
     <meta property="og:url" content="tejakummarikuntla.github.io/blog/snorkeling-in-data-for-supervision-and-generation/" />
     <meta property="og:image" content="tejakummarikuntla.github.io/blog/content/images/2020/04/Snorkel_HighLevel_WorkFlow-1.png" />
     <meta property="article:published_time" content="2020-04-26T20:20:58.000Z" />
-    <meta property="article:modified_time" content="2020-04-26T20:20:58.000Z" />
+    <meta property="article:modified_time" content="2020-05-02T16:07:35.000Z" />
     <meta property="article:tag" content="Data Science" />
     
     <meta property="article:publisher" content="https://www.facebook.com/teja.kummarikuntla" />
@@ -68,7 +68,7 @@
     "headline": "Snorkeling in Data for Supervision and Generation",
     "url": "tejakummarikuntla.github.io/blog/snorkeling-in-data-for-supervision-and-generation/",
     "datePublished": "2020-04-26T20:20:58.000Z",
-    "dateModified": "2020-04-26T20:20:58.000Z",
+    "dateModified": "2020-05-02T16:07:35.000Z",
     "image": {
         "@type": "ImageObject",
         "url": "tejakummarikuntla.github.io/blog/content/images/2020/04/Snorkel_HighLevel_WorkFlow-1.png",
@@ -104,7 +104,7 @@
             <div class="site-nav-content">
                     <ul class="nav" role="menu">
     <li class="nav-home" role="menuitem"><a href="../index.html">Home</a></li>
-    <li class="nav-tag" role="menuitem"><a href="tejakummarikuntla.github.io/blog/tag/">Tag</a></li>
+    <li class="nav-tag" role="menuitem"><a href="../tag/data-science/index.html">Tag</a></li>
     <li class="nav-author" role="menuitem"><a href="../author/teja/index.html">Author</a></li>
     <li class="nav-github" role="menuitem"><a href="https://www.github.com/tejakummarikuntla">GitHub</a></li>
     <li class="nav-notes" role="menuitem"><a href="https://tejakummarikuntla.github.io/notes">Notes</a></li>
@@ -169,7 +169,7 @@
                             <h4 class="author-name"><a href="../author/teja/index.html">Teja Kummarikuntla</a></h4>
                             <div class="byline-meta-content">
                                 <time class="byline-meta-date" datetime="2020-04-27">27 Apr 2020</time>
-                                <span class="byline-reading-time"><span class="bull">&bull;</span> 3 min read</span>
+                                <span class="byline-reading-time"><span class="bull">&bull;</span> 8 min read</span>
                             </div>
                         </section>
 
@@ -195,7 +195,46 @@
 
             <section class="post-full-content">
                 <div class="post-content">
-                    <h2 id="let-s-start-with-why-"><strong>Let's Start with 'Why?'</strong></h2><p>Most of the preprocessing phase of pipelines has the complexity of taking the unstructured data or the Dark Data like text, Tables, Image, etc, and turning into the structured data which usually takes months or years and to build ML models further.Before building an ML model over the extracted data, we need to Hand label it, those are called Gold Labels. If we look from Today's Machine Learning pipeline at a high level this explicitly says that people spent most of the time on creating the Training Dataset and little hustle over Feature Engineering as Deep Learning makes it easy, the crucial part of creating a Training data set is labeling that data points correctly, because the performance of the end model totally depends on how well it trained with correct labels. Now, the question is can we hasten up the process of labeling using any Framework ?, This is where Snorkel began to accelerate Data Building and Managing, not only labeling, snorkel has many other features that make the bottlenecks unclogged.Snorkel: A framework for Rapidly Generating Training Data with Weak Supervision.</p><figure class="kg-card kg-image-card kg-card-hascaption"><img src="../content/images/2020/04/Screen-Shot-2020-01-23-at-9.03.38-PM.png" class="kg-image"><figcaption>Snorkel over Data Creation and Feature Engineering.</figcaption></figure><h2 id="weak-supervision"><strong>Weak Supervision</strong></h2><p>By eliminating the Hand labeling process, Now we can programmatically generate labels with external Domain knowledge or any patterns. This results in low-quality lables[Weak labels] more efficiently, which means Weak labels are intended to decrease the cost and increase efficiency. Using noisy, imprecise sources for building a large amount of training data in supervised learning is called Weak Supervision. One of the famous methodologies of weak labeling is Distant supervision. To reiterate Snorkel is an open-source system for quickly assembling training data through weak supervision.</p><h2 id="what-snorkel-can-do"><strong>What Snorkel can do?</strong></h2><p>Snorkel currently has three features for creating and handling training data sets.</p><ul><li><strong><strong>Data Labeling:</strong></strong> Assigning a value to each data point based on Heruristc, Distant Supervision Techniques, etc.,</li><li><strong><strong>Data Transformation:</strong></strong> Converting existing data from one format to another or modifying the data which doesn't affect actual labels. e.g: rotating an image in different angles, etc.,</li><li><strong><strong>Data Slicing:</strong></strong> Segmenting a data set into required subsets for different purposes like improving model perfomance.</li></ul><figure class="kg-card kg-image-card kg-card-hascaption"><img src="../content/images/2020/04/fig_abstractions-1.png" class="kg-image"><figcaption>Source: snorkel.org</figcaption></figure><h2 id="how-snorkel-does-it"><strong>How Snorkel does it?</strong></h2><p>The Hight level Architecture of Snorkel's Workflow consist of Five Steps:</p><ol><li>Writing Labeling Functions. (LFs)</li><li>Modeling and Combining Labeling Functions.</li><li>Writing Transformation Functions for perfoming Data Augmentation.</li><li>Writing Slicing Functions for Subset selection.</li><li>Training a final ML Model.</li></ol><p>Following up these, the takeaway parts of Snorkel is its ability to use labels from different Weak Supervision sources and the set of all labeling functions are modeled by combining and applying a Generative Model [LabelModel] that generates a weak set of labels. Along with that, the system can output Probablistic labels that can be used to train various Classifiers, which indeed generalizes noise labels.</p><figure class="kg-card kg-image-card kg-width-full"><img src="../content/images/2020/04/Snorkel_HighLevel_WorkFlow.png" class="kg-image"></figure><h2 id="data-labeling"><strong>Data Labeling</strong></h2><p>There are few diffent ways that you would totally turn into weak suprevision by using a python decorator <code>labeling_function()</code> or a python class <code>LabelingFunction</code>.</p><ul><li><strong><strong>Heuristics</strong></strong>: applying set of conditions by a pattern, ex: using regular expressions</li><li><strong><strong>Third party Models</strong></strong>: Using an exisiting Model to perfome labeling.</li><li><strong><strong>Distant Supervision</strong></strong>: Using Existing ground truth data that imprecisely fits in, [External Knowledge Bases].</li></ul><p>Let's suppose, we have three different labeling functios are written using conditional pattern and Regular expresions. Expample taken form Snorkel-tutorials.</p>
+                    <h2 id="let-s-start-with-why-"><strong>Let's Start with 'Why?'</strong></h2><p>Most of the preprocessing phase of pipelines has the complexity of taking the unstructured data or the Dark Data like text, Tables, Image, etc, and turning into the structured data which usually takes months or years and to build ML models further.Before building an ML model over the extracted data, we need to Hand label it, those are called Gold Labels. If we look from Today's Machine Learning pipeline at a high level this explicitly says that people spent most of the time on creating the Training Dataset and little hustle over Feature Engineering as Deep Learning makes it easy, the crucial part of creating a Training data set is labeling that data points correctly, because the performance of the end model totally depends on how well it trained with correct labels. Now, the question is can we hasten up the process of labeling using any Framework ?, This is where Snorkel began to accelerate Data Building and Managing, not only labeling, snorkel has many other features that make the bottlenecks unclogged.Snorkel: A framework for Rapidly Generating Training Data with Weak Supervision.</p><figure class="kg-card kg-image-card kg-card-hascaption"><img src="../content/images/2020/04/Screen-Shot-2020-01-23-at-9.03.38-PM.png" class="kg-image"><figcaption>Snorkel over Data Creation and Feature Engineering.</figcaption></figure><h2 id="weak-supervision"><strong>Weak Supervision</strong></h2><p>By eliminating the Hand labeling process, Now we can programmatically generate labels with external Domain knowledge or any patterns. This results in low-quality lables[Weak labels] more efficiently, which means Weak labels are intended to decrease the cost and increase efficiency. Using noisy, imprecise sources for building a large amount of training data in supervised learning is called Weak Supervision. One of the famous methodologies of weak labeling is Distant supervision. To reiterate Snorkel is an open-source system for quickly assembling training data through weak supervision.</p><h2 id="what-snorkel-can-do"><strong>What Snorkel can do?</strong></h2><p>Snorkel currently has three features for creating and handling training data sets.</p><ul><li><strong><strong>Data Labeling:</strong></strong> Assigning a value to each data point based on Heruristc, Distant Supervision Techniques, etc.,</li><li><strong><strong>Data Transformation:</strong></strong> Converting existing data from one format to another or modifying the data which doesn't affect actual labels. e.g: rotating an image in different angles, etc.,</li><li><strong><strong>Data Slicing:</strong></strong> Segmenting a data set into required subsets for different purposes like improving model perfomance.</li></ul><figure class="kg-card kg-image-card kg-card-hascaption"><img src="../content/images/2020/04/fig_abstractions-1.png" class="kg-image"><figcaption>Source: snorkel.org</figcaption></figure><h2 id="how-snorkel-does-it"><strong>How Snorkel does it?</strong></h2><p>The Hight level Architecture of Snorkel's Workflow consist of Five Steps:</p><ol><li>Writing Labeling Functions. (LFs)</li><li>Modeling and Combining Labeling Functions.</li><li>Writing Transformation Functions for perfoming Data Augmentation.</li><li>Writing Slicing Functions for Subset selection.</li><li>Training a final ML Model.</li></ol><p>Following up these, the takeaway parts of Snorkel is its ability to use labels from different Weak Supervision sources and the set of all labeling functions are modeled by combining and applying a Generative Model [LabelModel] that generates a weak set of labels. Along with that, the system can output Probablistic labels that can be used to train various Classifiers, which indeed generalizes noise labels.</p><figure class="kg-card kg-image-card kg-width-full"><img src="../content/images/2020/04/Snorkel_HighLevel_WorkFlow.png" class="kg-image"></figure><h2 id="data-labeling"><strong>Data Labeling</strong></h2><p>There are few diffent ways that you would totally turn into weak suprevision by using a python decorator <code>labeling_function()</code> or a python class <code>LabelingFunction</code>.</p><ul><li><strong><strong>Heuristics</strong></strong>: applying set of conditions by a pattern, ex: using regular expressions</li><li><strong><strong>Third party Models</strong></strong>: Using an exisiting Model to perfome labeling.</li><li><strong><strong>Distant Supervision</strong></strong>: Using Existing ground truth data that imprecisely fits in, [External Knowledge Bases].</li></ul><p>Let's suppose, we have three different labeling functios are written using conditional pattern and Regular expresions. Expample taken form Snorkel-tutorials.</p><pre><code>@labeling_function()
+def check(x):
+    return SPAM if "check" in x.text.lower() else ABSTAIN
+
+@labeling_function()
+def check_out(x):
+    return SPAM if "check out" in x.text.lower() else ABSTAIN
+  
+# with Regex
+@labeling_function()
+def regex_check_out(x):
+    return SPAM if re.search(r"check.*out", x.text, flags=re.I) else ABSTAIN</code></pre><p>Now, these labeling functions can label in their own way, which is completely independent, the lables would varry.</p><h2 id="applying-lfs"><strong>Applying LFs</strong></h2><p>Snorkel provides Labeling Functions applier for Pandas DataFrames, we can use <code>PandasLFApplier(lfs)</code> which takes a list of labeling functions and return <code>Label Matrix</code> in which each columns represents the outputs of each labeling function in the input list.</p><pre><code>lfs = [check_out, check, regex_check_out]
+
+applier = PandasLFApplier(lfs=lfs)
+L_train = applier.apply(df=df_train)</code></pre><figure class="kg-card kg-image-card"><img src="../content/images/2020/05/L_Train.png" class="kg-image"></figure><p>For understanding the perfomance and analysing multiple labeling functions let's burst some terminologeis.</p><ul><li><strong><strong>Polarity</strong></strong>: The set of unique labels that LF outputs</li><li><strong><strong>Coverage</strong></strong>: The fraction of the dataset the LF labels</li><li><strong><strong>Overlaps</strong></strong>: The fraction of the dataset where the one LF and atleast one other LF label same.</li><li><strong><strong>Conflicts</strong></strong>: The fraction of the dataset where one LF and at least one other LF label and disagree</li><li><strong><strong>Correct</strong></strong>: The number of data points that the LF labels correctly (if gold labels are provided)</li><li><strong><strong>Incorrect</strong></strong>: The number of data points that this LF labels incorrectly (if gold labels are provided)</li><li><strong><strong>Empirical Accuracy</strong></strong>: The empirical accuracy of the LF (if gold labels are available)</li></ul><p>When we apply LFAnalysis[Labeling Functions Analysis] utility, it results the above metrics for each labeling function.</p><pre><code class="language-python">lfs = [check, check_out, regex_check_out]
+LFAnalysis(L=L_train, lfs=lfs).lf_summary(Y=Y_dev)
+</code></pre><figure class="kg-card kg-image-card"><img src="../content/images/2020/05/LFAnalysis.png" class="kg-image"></figure><p>	After done writing Labeling Functions, and the L_Train has respective columns that represents the corrosponding outputs, our goal is to consie and  generate one standard column which has noise-aware probablistic label per data that can be appended to unlabeled dataset for futher training purpose.</p><p>This process of generating the final label column can be done in few approaches. We can take a Majority vote from the L_train for each data point and result a single value.</p><pre><code class="language-python">from snorkel.labeling import MajorityLabelVoter
+
+majority_model = MajorityLabelVoter()
+preds_train = majority_model.predict(L=L_train)
+</code></pre><p>One other approch is Snorkel can train a Label Model that takes advange of conflicts between all Labeling Functions and estimate their accuracy. This model with produce a singel set of noise-aware labels, which are porbablistic [Confident-Weighted]. We now can use the resulting probablistic label values to train various classifiers.</p><p>We can use techniques like Logistic Regression, SVM, LSTM at this stage. The discriminative model learn feature representation of our labelling functions and this makes it better able to generalize to unseen data. This will increase the recall and produces final output.</p><pre><code class="language-python">from snorkel.labeling import LabelModel
+
+label_model = LabelModel(cardinality=2, verbose=True)
+label_model.fit(L_train=L_train, n_epochs=500, lr=0.001, log_freq=100, seed=123)
+preds_train = label_model.predict(L=L_train)
+</code></pre><figure class="kg-card kg-image-card kg-card-hascaption"><img src="../content/images/2020/05/snorkel_Labeling_overview.png" class="kg-image"><figcaption>Source: <a href="https://blog.fastforwardlabs.com/2019/09/27/automating-weak-supervision.html">Automating Weak Supervision</a></figcaption></figure><h2 id="data-transformation">Data Transformation</h2><p>Transformation is a technique of Data Augmentation, a proper data augmentation certainly boosts up the model performance.  Computer vision is the area of work where Data augmentation is used extensively, an Image can be augmented by rotating, flipping or adding filters, etc. When it befalls to the part of Text the complexity of applying Augmentation goes up. A simple example of transforming a text is by replacing the existing words in the document by its synonyms.  But not every word can be replaceable such as a, an, the, etc.</p><p>When we ask what that really makes Data Transformation a big difference is the More the data we have, the better the model performs.  As we transform a data point in different ways, we certainly do not affect the label so it explicitly generates data that could most benefit the training phase.</p><figure class="kg-card kg-image-card kg-card-hascaption"><img src="https://labs.imaginea.com/content/images/2020/01/data_agu_image.png" class="kg-image"><figcaption>Source: <a href="https://www.google.com/url?sa=i&amp;source=images&amp;cd=&amp;ved=2ahUKEwiD6qW5wZrnAhVC9nMBHSsUDRwQjRx6BAgBEAQ&amp;url=https%3A%2F%2Flink.springer.com%2Farticle%2F10.1186%2Fs40537-019-0197-0&amp;psig=AOvVaw1mwDEiBpoljY1029YvQxDz&amp;ust=1579896010264612" style="box-sizing: inherit; margin: 0px; padding: 0px; border: 0px; font-style: inherit; font-variant: inherit; font-weight: inherit; font-stretch: inherit; line-height: inherit; font-family: inherit; font-size: 17.6px; vertical-align: baseline; background-color: transparent; color: rgb(0, 0, 0); text-decoration: none; word-break: break-word; box-shadow: rgb(62, 176, 239) 0px -1px 0px inset;">Survey on Image Data Augmentation</a></figcaption></figure><h2 id="writing-transformation-functions">Writing Transformation Functions</h2><p>Snorkel provides a python decorator `transformation_function` which takes a single data point and returns the transformed version of it. If the data transformation isn't done it returns `None`, If all the TFs applied to a data point return None, the data point won't be included in the augmented dataset when we apply our TFs below.</p><pre><code class="language-python">@transformation_function(pre=[spacy])
+def change_person(x):
+    person_names = [ent.text for ent in x.doc.ents if ent.label_ == "PERSON"]
+    # If there is at least one person name, replace a random one. Else return None.
+    if person_names:
+            name_to_replace = np.random.choice(person_names)
+            replacement_name = np.random.choice(replacement_names)
+            x.text = x.text.replace(name_to_replace, replacement_name)
+            return x</code></pre><h3 id="applying-transformation-functions-"><strong>Applying Transformation Functions.</strong></h3><p>A  little similar approach as applying labeling functions, Snorkel provides a specific class for Pandas DataFrame `PandasTFApplier`, where the PandasTFApplier takes list of transformation functions and a Policy, a Policy is used to determine what sequence of Transformation functions to apply, here we use `mean_field_policy`, which allows specifying a sampling distribution for the Transformation Functions.</p><pre><code class="language-python">from snorkel.augmentation import PandasTFApplier
+
+tfs = [change_person, swap_adjectives, replace_verb_with_synonym, replace_noun_with_synonym, replace_adjective_with_synonym]
+
+tf_applier = PandasTFApplier(tfs, mean_field_policy)
+df_train_augmented = tf_applier.apply(df_train)
+Y_train_augmented = df_train_augmented["label"].values</code></pre><h2 id="reference-"><strong>Reference:</strong></h2><p><a href="https://github.com/snorkel-team/snorkel-tutorials">Snorkel Tutorials</a>; <a href="https://labs.imaginea.com/snorkeling-in-data-for-supervision-and-generation/snorkel.org">snorkel.org</a>; <a href="https://towardsdatascience.com/snorkel-a-weak-supervision-system-a8943c9b639f">Snorkel a weak supervision systerm;</a> <a href="https://www.google.com/search?q=introducing+snorkl+medium&amp;rlz=1C5CHFA_enIN836IN836&amp;oq=introducing+snorkl+medium&amp;aqs=chrome..69i57j33.4575j1j4&amp;sourceid=chrome&amp;ie=UTF-8">Introducing Snorkel</a>; <a href="https://hazyresearch.github.io/snorkel/blog/june-2019-workshop.html">Snorkel-June-2019-workshop</a>;</p><h2 id="my-exprience-at-imaginea-labs-"><strong>My Exprience at Imaginea Labs.</strong></h2><blockquote>A short period of time may not give you much experience, but it leaves you with constructive insights that you could transform the way you admire.       - tejakummarikuntla.</blockquote><p>I'm the youngest friend to everyone in the team not only in age but also in thoughts and actions ;p. I always feel that the connections and habits you build will build you back and I tried every day doing it my best. I spent most of my time to Unlearn and relearn in the other dimension that could easily create vivid impressions over the journey and this is the endgame of my Internship journey[24/01/2020].</p><h3 id="tl-dr"><strong>TL;DR</strong></h3><p>Here are a few takeaways that I could only mention by writing. As there are many (intuitions/Familirites) that I couldn't express in words.</p><blockquote>Sri would be probably chuckling when he notices that I tried using Intuition and Familiarity interchangeably [<a href="http://www.userinsight.com/familiarity-breeds-intuition/">Familiarity Breeds Intution</a>]</blockquote><ul><li>Constructive learning approach.</li><li>Learning how to learn.</li><li>Art of not negotiating peculiar advice.</li><li>Aligning the mathematical thinking with programmatical implementation.</li><li>Unlearning.</li><li>Lucid approach to understanding a research paper.</li><li>It's not about how much you know, it's all about what you can devise with it.</li><li>Tracking the new learning by logging in Latex or Markdown.[Zotero]</li><li>You can only know the curx when you keep questioning 'Why?'</li><li>Mathematical bonding not only with life but also with Music and Art [Godel, Escher, Bach]</li><li>You can only Enjoy working when you see a purpose in it.</li><li>Healthy relations will amplify performance.</li><li>When you start expressing, you will start noticing different results.</li><li>Laughing for lame jokes isn't a sin, coz I do a lot ;p [Not lame jokes ] I know it's very lame ;p.</li></ul><p>I've updated my technical progess at <a href="https://www.linkedin.com/tejakummarikuntla/imaginea_assign">GitHub</a> [Never missed a day to commit :D], feel free to check out and keep in touch @ <a href="https://www.linkedin.com/in/tejakummarikuntla">LinkedIn</a>, <a href="https://www.instagram.com/tejakummarikuntla">Instagram</a>.</p><p><strong><strong>Thank you for all my amazing mentors❤️:</strong></strong></p><p>Arun Edwin, Vikash, Sachin, Ebby, Vivek, Rehan, Vishwas, Nimmy, Vijay, Swamy, Kripa, Arthy, Sri, Hari.</p><figure class="kg-card kg-image-card kg-width-full kg-card-hascaption"><img src="https://labs.imaginea.com/content/images/2020/01/PSX_20200109_223113--1-.jpg" class="kg-image"><figcaption>Sachin's Send off [10/01/2020] | Shot on Vikash's OnePlus 7t 🤪</figcaption></figure><p>Originally Published at: <a href="https://labs.imaginea.com/snorkeling-in-data-for-supervision-and-generation/">Imaginea Labs</a></p><figure class="kg-card kg-image-card kg-width-full"><img src="https://labs.imaginea.com/content/images/2020/01/1_iGomvgpRqhDrvJaaxrtT2Q.png" class="kg-image"></figure>
                 </div>
             </section>
 
@@ -211,32 +250,32 @@
         <div class="read-next-feed">
 
 
-                <article class="post-card post tag-math featured ">
+                <article class="post-card post tag-image-processing tag-computer-vision ">
 
-    <a class="post-card-image-link" href="../understanding-and-applying-log-transformation/index.html">
+    <a class="post-card-image-link" href="../blue-or-green-screen-effect-with-opencv-chroma-keying/index.html">
         <img class="post-card-image"
-            srcset="../content/images/size/w300/2020/04/log.PNG 300w,
-                   ../content/images/size/w600/2020/04/log.PNG 600w,
-                  ../content/images/size/w1000/2020/04/log.PNG 1000w,
-                 ../content/images/size/w2000/2020/04/log.PNG 2000w"
+            srcset="../content/images/size/w300/2020/05/1_PEELIgKtt9V_Q7heJFNy-g.png 300w,
+                   ../content/images/size/w600/2020/05/1_PEELIgKtt9V_Q7heJFNy-g.png 600w,
+                  ../content/images/size/w1000/2020/05/1_PEELIgKtt9V_Q7heJFNy-g.png 1000w,
+                 ../content/images/size/w2000/2020/05/1_PEELIgKtt9V_Q7heJFNy-g.png 2000w"
             sizes="(max-width: 1000px) 400px, 700px"
             loading="lazy"
-            src="../content/images/size/w600/2020/04/log.PNG"
-            alt="Understanding and Applying Log Transformation"
+            src="../content/images/size/w600/2020/05/1_PEELIgKtt9V_Q7heJFNy-g.png"
+            alt="Blue or Green Screen Effect with OpenCV [Chroma keying]"
         />
     </a>
 
     <div class="post-card-content">
 
-        <a class="post-card-content-link" href="../understanding-and-applying-log-transformation/index.html">
+        <a class="post-card-content-link" href="../blue-or-green-screen-effect-with-opencv-chroma-keying/index.html">
 
             <header class="post-card-header">
-                    <div class="post-card-primary-tag">math</div>
-                <h2 class="post-card-title">Understanding and Applying Log Transformation</h2>
+                    <div class="post-card-primary-tag">Image Processing</div>
+                <h2 class="post-card-title">Blue or Green Screen Effect with OpenCV [Chroma keying]</h2>
             </header>
 
             <section class="post-card-excerpt">
-                    <p>Log Transformation is used when events vary Drastically  Log-scale informs on relative changes (multiplicative), while linear-scale informs on absolute changes (additive). When do you use each? When you care about</p>
+                    <p>Jump to Code with .ipynb Before we get into Chroma keying[ green screen effect ] it’s better to understand the underlying concept that making it possible with Open CV. Colour</p>
             </section>
 
         </a>
@@ -256,7 +295,7 @@
             </ul>
             <div class="post-card-byline-content">
                 <span><a href="../author/teja/index.html">Teja Kummarikuntla</a></span>
-                <span class="post-card-byline-date"><time datetime="2020-04-27">27 Apr 2020</time> <span class="bull">&bull;</span> 1 min read</span>
+                <span class="post-card-byline-date"><time datetime="2019-05-01">1 May 2019</time> <span class="bull">&bull;</span> 6 min read</span>
             </div>
         </footer>
 
@@ -290,7 +329,7 @@
         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
         crossorigin="anonymous">
     </script>
-    <script src="../assets/built/casper.js@v=d68cd2a12d"></script>
+    <script src="../assets/built/casper.js@v=7e2804ec5d"></script>
 
     <script>
         // Parse the URL parameter

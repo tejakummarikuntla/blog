@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>Blue or Green Screen Effect with OpenCV [Chroma keying]</title>
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" type="text/css" href="../assets/built/screen.css@v=7e2804ec5d.css" />
+
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon" />
+    <link rel="canonical" href="index.html" />
+    <meta name="referrer" content="no-referrer-when-downgrade" />
+    <link rel="amphtml" href="amp/index.html" />
+    
+    <meta property="og:site_name" content="tejakummarikuntla" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="Blue or Green Screen Effect with OpenCV [Chroma keying]" />
+    <meta property="og:description" content="Jump to Code with .ipynb Before we get into Chroma keying[ green screen effect ] it’s better to understand the underlying concept that making it possible with Open CV. Colour ThresholdsAs we treat Images as grids of pixels as a function of X and Y, we are gonna use that" />
+    <meta property="og:url" content="tejakummarikuntla.github.io/blog/blue-or-green-screen-effect-with-opencv-chroma-keying/" />
+    <meta property="og:image" content="tejakummarikuntla.github.io/blog/content/images/2020/05/1_PEELIgKtt9V_Q7heJFNy-g.png" />
+    <meta property="article:published_time" content="2019-05-01T16:00:00.000Z" />
+    <meta property="article:modified_time" content="2020-05-02T16:06:50.000Z" />
+    <meta property="article:tag" content="Image Processing" />
+    <meta property="article:tag" content="computer-vision" />
+    
+    <meta property="article:publisher" content="https://www.facebook.com/teja.kummarikuntla" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Blue or Green Screen Effect with OpenCV [Chroma keying]" />
+    <meta name="twitter:description" content="Jump to Code with .ipynb Before we get into Chroma keying[ green screen effect ] it’s better to understand the underlying concept that making it possible with Open CV. Colour ThresholdsAs we treat Images as grids of pixels as a function of X and Y, we are gonna use that" />
+    <meta name="twitter:url" content="tejakummarikuntla.github.io/blog/blue-or-green-screen-effect-with-opencv-chroma-keying/" />
+    <meta name="twitter:image" content="tejakummarikuntla.github.io/blog/content/images/2020/05/1_PEELIgKtt9V_Q7heJFNy-g.png" />
+    <meta name="twitter:label1" content="Written by" />
+    <meta name="twitter:data1" content="Teja Kummarikuntla" />
+    <meta name="twitter:label2" content="Filed under" />
+    <meta name="twitter:data2" content="Image Processing, computer-vision" />
+    <meta name="twitter:site" content="@crossmux" />
+    <meta name="twitter:creator" content="@crossmux" />
+    <meta property="og:image:width" content="820" />
+    <meta property="og:image:height" content="312" />
+    
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "publisher": {
+        "@type": "Organization",
+        "name": "tejakummarikuntla",
+        "url": "tejakummarikuntla.github.io/blog/",
+        "logo": "tejakummarikuntla.github.io/blog/content/images/2020/04/output-onlinepngtools--6-.png"
+    },
+    "author": {
+        "@type": "Person",
+        "name": "Teja Kummarikuntla",
+        "image": {
+            "@type": "ImageObject",
+            "url": "tejakummarikuntla.github.io/blog/content/images/2020/04/Screenshot--490-.png",
+            "width": 1033,
+            "height": 1078
+        },
+        "url": "tejakummarikuntla.github.io/blog/author/teja/",
+        "sameAs": [
+            "https://twitter.com/crossmux"
+        ]
+    },
+    "headline": "Blue or Green Screen Effect with OpenCV [Chroma keying]",
+    "url": "tejakummarikuntla.github.io/blog/blue-or-green-screen-effect-with-opencv-chroma-keying/",
+    "datePublished": "2019-05-01T16:00:00.000Z",
+    "dateModified": "2020-05-02T16:06:50.000Z",
+    "image": {
+        "@type": "ImageObject",
+        "url": "tejakummarikuntla.github.io/blog/content/images/2020/05/1_PEELIgKtt9V_Q7heJFNy-g.png",
+        "width": 820,
+        "height": 312
+    },
+    "keywords": "Image Processing, computer-vision",
+    "description": "Jump to Code [https://github.com/tejakummarikuntla/blue-screen-effect-OpenCV/] \nwith .ipynb\n\n\n--------------------------------------------------------------------------------\n\nBefore we get into Chroma keying[ green screen effect ] it’s better to\nunderstand the underlying concept that making it possible with Open CV.\n\nColour Thresholds\nAs we treat Images as grids of pixels as a function of X and Y, we are gonna use\nthat information of colors to isolate a particular area.selecting areas of\nintres",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "tejakummarikuntla.github.io/blog/"
+    }
+}
+    </script>
+
+    <meta name="generator" content="Ghost 3.13" />
+    <link rel="alternate" type="application/rss+xml" title="tejakummarikuntla" href="../rss/index.html" />
+
+</head>
+<body class="post-template tag-image-processing tag-computer-vision">
+
+    <div class="site-wrapper">
+
+        
+
+<header class="site-header">
+    <div class="outer site-nav-main">
+    <div class="inner">
+        <nav class="site-nav">
+    <div class="site-nav-left-wrapper">
+        <div class="site-nav-left">
+                <a class="site-nav-logo" href="../index.html"><img src="../content/images/2020/04/output-onlinepngtools--6-.png" alt="tejakummarikuntla" /></a>
+            <div class="site-nav-content">
+                    <ul class="nav" role="menu">
+    <li class="nav-home" role="menuitem"><a href="../index.html">Home</a></li>
+    <li class="nav-tag" role="menuitem"><a href="../tag/data-science/index.html">Tag</a></li>
+    <li class="nav-author" role="menuitem"><a href="../author/teja/index.html">Author</a></li>
+    <li class="nav-github" role="menuitem"><a href="https://www.github.com/tejakummarikuntla">GitHub</a></li>
+    <li class="nav-notes" role="menuitem"><a href="https://tejakummarikuntla.github.io/notes">Notes</a></li>
+</ul>
+
+                    <span class="nav-post-title ">Blue or Green Screen Effect with OpenCV [Chroma keying]</span>
+            </div>
+        </div>
+    </div>
+    <div class="site-nav-right">
+            <div class="social-links">
+                    <a class="social-link social-link-fb" href="https://www.facebook.com/teja.kummarikuntla" title="Facebook" target="_blank" rel="noopener"><svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="M16 0c8.837 0 16 7.163 16 16s-7.163 16-16 16S0 24.837 0 16 7.163 0 16 0zm5.204 4.911h-3.546c-2.103 0-4.443.885-4.443 3.934.01 1.062 0 2.08 0 3.225h-2.433v3.872h2.509v11.147h4.61v-11.22h3.042l.275-3.81h-3.397s.007-1.695 0-2.187c0-1.205 1.253-1.136 1.329-1.136h2.054V4.911z" /></svg></a>
+                    <a class="social-link social-link-tw" href="https://twitter.com/crossmux" title="Twitter" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M30.063 7.313c-.813 1.125-1.75 2.125-2.875 2.938v.75c0 1.563-.188 3.125-.688 4.625a15.088 15.088 0 0 1-2.063 4.438c-.875 1.438-2 2.688-3.25 3.813a15.015 15.015 0 0 1-4.625 2.563c-1.813.688-3.75 1-5.75 1-3.25 0-6.188-.875-8.875-2.625.438.063.875.125 1.375.125 2.688 0 5.063-.875 7.188-2.5-1.25 0-2.375-.375-3.375-1.125s-1.688-1.688-2.063-2.875c.438.063.813.125 1.125.125.5 0 1-.063 1.5-.25-1.313-.25-2.438-.938-3.313-1.938a5.673 5.673 0 0 1-1.313-3.688v-.063c.813.438 1.688.688 2.625.688a5.228 5.228 0 0 1-1.875-2c-.5-.875-.688-1.813-.688-2.75 0-1.063.25-2.063.75-2.938 1.438 1.75 3.188 3.188 5.25 4.25s4.313 1.688 6.688 1.813a5.579 5.579 0 0 1 1.5-5.438c1.125-1.125 2.5-1.688 4.125-1.688s3.063.625 4.188 1.813a11.48 11.48 0 0 0 3.688-1.375c-.438 1.375-1.313 2.438-2.563 3.188 1.125-.125 2.188-.438 3.313-.875z"/></svg>
+</a>
+            </div>
+                <a class="rss-button" href="https://feedly.com/i/subscription/feed/tejakummarikuntla.github.io/blog/rss/" title="RSS" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><circle cx="6.18" cy="17.82" r="2.18"/><path d="M4 4.44v2.83c7.03 0 12.73 5.7 12.73 12.73h2.83c0-8.59-6.97-15.56-15.56-15.56zm0 5.66v2.83c3.9 0 7.07 3.17 7.07 7.07h2.83c0-5.47-4.43-9.9-9.9-9.9z"/></svg>
+</a>
+
+    </div>
+</nav>
+    </div>
+</div></header>
+
+
+<main id="site-main" class="site-main outer">
+    <div class="inner">
+
+        <article class="post-full post tag-image-processing tag-computer-vision ">
+
+            <header class="post-full-header">
+
+                <section class="post-full-tags">
+                    <a href="../tag/image-processing/index.html">Image Processing</a>
+                </section>
+
+                <h1 class="post-full-title">Blue or Green Screen Effect with OpenCV [Chroma keying]</h1>
+
+
+                <div class="post-full-byline">
+
+                    <section class="post-full-byline-content">
+
+                        <ul class="author-list">
+                            <li class="author-list-item">
+
+                                <div class="author-card">
+                                    <img class="author-profile-image" src="../content/images/size/w100/2020/04/Screenshot--490-.png" alt="Teja Kummarikuntla" />
+                                    <div class="author-info">
+                                        <h2>Teja Kummarikuntla</h2>
+                                        <p>Read <a href="../author/teja/index.html">more posts</a> by this author.</p>
+                                    </div>
+                                </div>
+
+                                <a href="../author/teja/index.html" class="author-avatar">
+                                    <img class="author-profile-image" src="../content/images/size/w100/2020/04/Screenshot--490-.png" alt="Teja Kummarikuntla" />
+                                </a>
+
+                            </li>
+                        </ul>
+
+                        <section class="post-full-byline-meta">
+                            <h4 class="author-name"><a href="../author/teja/index.html">Teja Kummarikuntla</a></h4>
+                            <div class="byline-meta-content">
+                                <time class="byline-meta-date" datetime="2019-05-01">1 May 2019</time>
+                                <span class="byline-reading-time"><span class="bull">&bull;</span> 6 min read</span>
+                            </div>
+                        </section>
+
+                    </section>
+
+
+                </div>
+            </header>
+
+            <figure class="post-full-image">
+                <img
+                    srcset="../content/images/size/w300/2020/05/1_PEELIgKtt9V_Q7heJFNy-g.png 300w,
+                           ../content/images/size/w600/2020/05/1_PEELIgKtt9V_Q7heJFNy-g.png 600w,
+                          ../content/images/size/w1000/2020/05/1_PEELIgKtt9V_Q7heJFNy-g.png 1000w,
+                         ../content/images/size/w2000/2020/05/1_PEELIgKtt9V_Q7heJFNy-g.png 2000w"
+                    sizes="(max-width: 800px) 400px,
+                        (max-width: 1170px) 1170px,
+                            2000px"
+                    src="../content/images/size/w2000/2020/05/1_PEELIgKtt9V_Q7heJFNy-g.png"
+                    alt="Blue or Green Screen Effect with OpenCV [Chroma keying]"
+                />
+            </figure>
+
+            <section class="post-full-content">
+                <div class="post-content">
+                    <p>Jump to <a href="https://github.com/tejakummarikuntla/blue-screen-effect-OpenCV/" rel="noopener nofollow">Code</a> with .ipynb</p><hr><figure class="kg-card kg-image-card"><img src="https://cdn-images-1.medium.com/max/1000/1*PEELIgKtt9V_Q7heJFNy-g.png" class="kg-image"></figure><p>Before we get into Chroma keying[ green screen effect ] it’s better to understand the underlying concept that making it possible with Open CV.</p><h3 id="colour-thresholds">Colour Thresholds</h3><p>As we treat Images as grids of pixels as a function of X and Y, we are gonna use that information of colors to isolate a particular area.<code>selecting areas of intrest.</code> we’ll be selecting an area of interest using Colour Thresholds,</p><p>With Colour Thresholds we can able to remove parts of an image that falls under a specific color range. The common use is with Blue/Green Screen.</p><p>A Blue Screen similar to a green screen is used to layer two images or video streams based on identifying and replacing a large blue area.</p><p>We’re gonna use Blue Screen to film now ;p. So, how does it work?</p><p>The first step is to isolate the blue background and replace that blue area with an image of your choosing.</p><hr><figure class="kg-card kg-image-card kg-card-hascaption"><img src="https://cdn-images-1.medium.com/max/750/1*P7ypHvfCRifzVtg26EP5tA.jpeg" class="kg-image"><figcaption>source: <a href="https://www.youtube.com/channel/UCchJggclQ1aXyHI9kPrqhAg" data-href="https://www.youtube.com/channel/UCchJggclQ1aXyHI9kPrqhAg" class="markup--anchor markup--figure-anchor" rel="noopener" target="_blank">Crude Animation</a> (ctree_bluescreen.jpg)</figcaption></figure><p>We’ll be starting with an image of a Christmas tree on a Blue screen background.</p><p>We first have to identify the blue region then later we’ll replace it with a background image of our choosing.</p><hr><pre><code>import cv2
+import matplotlib.pyplot as plt
+import numpy as np
+image = cv2.imread('images/ctree_bluescreen.jpg')</code></pre><p><code>cv2.imread()</code> is used to read an image which takes the image location as an argument, where the image <code>ctree_bluescreen.jpg</code> is in the folder called <code>images.</code></p><pre><code>print('Image type: ', type(image),
+      'Image Dimensions : ', image.shape)</code></pre><p>This gives you the result as :</p><p><code>Image type:</code> &lt;class ‘numpy.ndarray’&gt; <code>Image Dimesnsions:</code> (720, 1280, 3)</p><p>The openCV library reads the image as an array, also known as a grid or matrix of pixel values. The shape of the image, which contains three values that represent the dimensions of the image array,</p><p><code>720:</code> height in pixels</p><p><code>816:</code> width in pixels</p><p><code>3:</code> Colour Components for Red, Green and Blue (RGB) valuesimage_copy = np.copy(image)</p><pre><code>image_copy = np.copy(image)
+image_copy = cv2.cvtColor(image_copy, cv2.COLOR_BGR2RGB)
+plt.imshow(image_copy)</code></pre><figure class="kg-card kg-image-card kg-card-hascaption"><img src="https://cdn-images-1.medium.com/max/750/1*Xeyfrp-B2hgmV489VQR-4g.png" class="kg-image"><figcaption>Output for the above code&nbsp;snippet</figcaption></figure><p>Open CV reads in colour images as BGR(blue, green, red) images, not as RGB(red, blue, green). So, the Red and Blue colours are in reverse order and pyplot reflect this switch and results in a differently coloured image than original.</p><p>So, before we display the image let’s make a copy of the original image and use Open CV to change colour from BGR to RGB. It’s good practice to always make a copy of the image you’re working with. This way any transformation you’ll apply to the copy will not affect the original image, so it’s easier to undo a step or try something new.</p><p>Now, on this copied image <code>image_copy</code> we can perform a colour transformation using Open CV function <code>cvtColor()</code> , this takes a source image and colour conversion code, in this case, it is just BGR2RGB and then outputs the desired image.</p><hr><h3 id="defining-the-colour-threshold">Defining the Colour Threshold</h3><p>Now, we need to create a colour threshold to remove the desired blue region.</p><p>To create a Colour Threshold, we need to define lower and upper bounds for the colour that we need to isolate and remove -blue</p><p>we’ll be using the colour threshold values to eventually select the blue screen area that contains this range of colour values and get rid of it.</p><pre><code>lower_blue = np.array([0, 0, 100])     ##[R value, G value, B value]
+upper_blue = np.array([120, 100, 255])</code></pre><p>So, we defined the low threshold that contains the lowest values of red, green and blue that are still considered part of the blue screen background.</p><p>In <code>lower_blue</code> , for red and green, we set as 0, meaning it’s okay to have no red or green. But, the lowest value for blue should still be quite high, let’s say around 100.</p><p>Now, for <code>upper_blue</code>defined the upper threshold to allow little more red and green, and set the highest value for blue to <code>255</code>. Any colour within this low and high range will be an intense blue colour. this is just an estimation though. So, if we find that this range isn’t finding the blue screen area we want, we can get back and change the values.</p><hr><h3 id="creating-a-mask">Creating a Mask</h3><p>We are gonna use the colour bound that are just created to create an image mask.</p><p>Masks are very common way to isolate a <code>selected area of intrest</code> and do something with that area. We can create a mask over blue area using Open CV’s <code>inRange()</code> function.</p><pre><code>mask = cv2.inRange(image_copy, lower_blue, upper_blue)
+plt.imshow(mask, cmap='gray')</code></pre><p>The <code>inRange()</code> function takes in an image in our lower and upper colour bounds and defines a mask by asking if the colour value of each image pixel falls in the range of the lower and upper colour thresholds. If it does fall in this range, the mask will be allowed to be displayed and if not it will block it out and turn the pixel black.</p><p>In fact, we can visualize the mask by plotting it as we would an image.</p><figure class="kg-card kg-image-card kg-card-hascaption"><img src="https://cdn-images-1.medium.com/max/1000/1*mtSrH8zBZyTlSIPN7hGJYg.png" class="kg-image"><figcaption>plt.imshow(mask, cmap=’gray’)</figcaption></figure><p>The whole white area is where the image will be allowed to show through and the black will be blocked out. In numerical values, we can look at this mask as a 2D grid with the same dimensions as our image <code>720</code> pixels in height and <code>816</code> pixels in width.</p><p>Each coordinate in the mask has a value of either 255 for white and 0 for black, sort of like a grayscale image. And when we look at this mask we can see that it has a white area where the blue screen background is and the black area where the Christmas tree is.</p><p>Now, the first thing we need to do is let the Christmas tree show through and block the blue screen background.</p><hr><pre><code>masked_image = np.copy(image_copy)
+masked_image[mask != 0] = [0, 0, 0]
+plt.imshow(masked_image)</code></pre><p>First, to mask the image we are gonna make another image copy called <code>maksed_image</code> of our colour changed image copy, just in case I want to change the mask later on.</p><p>Then one way to select the blue screen is by asking for the part of that image that overlaps with the part of the mask that is white or not black. That is we’ll select the part of the image where the area of the mask is not equal to zero, using <code>mask != 0</code> . And to block this background area out we then set the pixels to black. Now when we display our result, that should show the Christmas tree area is the only area that should show through.</p><figure class="kg-card kg-image-card kg-card-hascaption"><img src="https://cdn-images-1.medium.com/max/1000/1*hsQ8XdFTqMmopzUxqEqDWw.png" class="kg-image"><figcaption>plt.imshow(masked_image)</figcaption></figure><p>The Blue screen background is gone, we might even change our colour threshold to get rid of any few blue spots, we can try it by increasing the highest green value and decreasing the low blue value, that should capture a larger range of blue.</p><hr><h3 id="mask-and-add-background-image">Mask and Add Background Image</h3><p>Now, we just have one last step which is to apply a background to this image. The process is fairly similar.</p><pre><code>background_image = cv2.imread('images/treeBackground.jpg')
+background_image = cv2.cvtColor(background_image, cv2.COLOR_BGR2RGB)
+
+crop_background = background_image[0:720, 0:1280]
+
+crop_background[mask == 0] = [0, 0, 0]
+
+plt.imshow(crop_background)</code></pre><p>First, we’ll read in an image of outer space and convert into RGB Colour. We’ll also crop it so that it’s the same size as our tree image <code>720 x 1280 pixels</code> , we are calling this image as <code>crop_background</code> , then we apply the mask, this time using the opposite mask, mean we want the background to show through and not the Christmas tree area. If we look back at the mak in this case we’re blocking the part of the background image where the mask is equal to zero.</p><p>Just to make sure we got this masking correct, we’re gonna plot the resulting image.</p><figure class="kg-card kg-image-card kg-card-hascaption"><img src="https://cdn-images-1.medium.com/max/1000/1*rIxWdP6mUPRmuUgwwUT5mQ.png" class="kg-image"><figcaption>plt.imshow(crop_background)</figcaption></figure><p>The result is the background with the Tree cut out.</p><p>Then finally, we just need to add these two images together. Since the black area is equivalent to zeros in pixel colour value, a simple addition will work.</p><pre><code>final_image = crop_background + masked_image
+plt.imshow(final_image)</code></pre><p>Now, when we plot the complete image I got the Christmas tree with new Background.🙌</p><figure class="kg-card kg-image-card kg-card-hascaption"><img src="https://cdn-images-1.medium.com/max/1000/1*1BT5fsCtfxh0n9mUvh7vhA.png" class="kg-image"><figcaption>plt.imshow(final_image)</figcaption></figure><p>Originally Published at: <a href="https://medium.com/fnplus/blue-or-green-screen-effect-with-open-cv-chroma-keying-94d4a6ab2743?source=---------2------------------">Medium</a></p><figure class="kg-card kg-image-card"><img src="https://cdn-images-1.medium.com/max/1000/1*iGomvgpRqhDrvJaaxrtT2Q.png" class="kg-image"></figure>
+                </div>
+            </section>
+
+
+
+        </article>
+
+    </div>
+</main>
+
+<aside class="read-next outer">
+    <div class="inner">
+        <div class="read-next-feed">
+
+                <article class="post-card post tag-data-science featured ">
+
+    <a class="post-card-image-link" href="../snorkeling-in-data-for-supervision-and-generation/index.html">
+        <img class="post-card-image"
+            srcset="../content/images/size/w300/2020/04/Snorkel_HighLevel_WorkFlow-1.png 300w,
+                   ../content/images/size/w600/2020/04/Snorkel_HighLevel_WorkFlow-1.png 600w,
+                  ../content/images/size/w1000/2020/04/Snorkel_HighLevel_WorkFlow-1.png 1000w,
+                 ../content/images/size/w2000/2020/04/Snorkel_HighLevel_WorkFlow-1.png 2000w"
+            sizes="(max-width: 1000px) 400px, 700px"
+            loading="lazy"
+            src="../content/images/size/w600/2020/04/Snorkel_HighLevel_WorkFlow-1.png"
+            alt="Snorkeling in Data for Supervision and Generation"
+        />
+    </a>
+
+    <div class="post-card-content">
+
+        <a class="post-card-content-link" href="../snorkeling-in-data-for-supervision-and-generation/index.html">
+
+            <header class="post-card-header">
+                    <div class="post-card-primary-tag">Data Science</div>
+                <h2 class="post-card-title">Snorkeling in Data for Supervision and Generation</h2>
+            </header>
+
+            <section class="post-card-excerpt">
+                    <p>Let's Start with 'Why?'Most of the preprocessing phase of pipelines has the complexity of taking the unstructured data or the Dark Data like text, Tables, Image, etc, and turning</p>
+            </section>
+
+        </a>
+
+        <footer class="post-card-meta">
+            <ul class="author-list">
+                <li class="author-list-item">
+            
+                    <div class="author-name-tooltip">
+                        Teja Kummarikuntla
+                    </div>
+            
+                    <a href="../author/teja/index.html" class="static-avatar">
+                        <img class="author-profile-image" src="../content/images/size/w100/2020/04/Screenshot--490-.png" alt="Teja Kummarikuntla" />
+                    </a>
+                </li>
+            </ul>
+            <div class="post-card-byline-content">
+                <span><a href="../author/teja/index.html">Teja Kummarikuntla</a></span>
+                <span class="post-card-byline-date"><time datetime="2020-04-27">27 Apr 2020</time> <span class="bull">&bull;</span> 8 min read</span>
+            </div>
+        </footer>
+
+    </div>
+
+</article>
+
+                <article class="post-card post tag-computer-vision ">
+
+    <a class="post-card-image-link" href="../camera-calibration-with-opencv/index.html">
+        <img class="post-card-image"
+            srcset="../content/images/size/w300/2020/05/1_KR71E-iu_Z5PNCUATg6XIA.png 300w,
+                   ../content/images/size/w600/2020/05/1_KR71E-iu_Z5PNCUATg6XIA.png 600w,
+                  ../content/images/size/w1000/2020/05/1_KR71E-iu_Z5PNCUATg6XIA.png 1000w,
+                 ../content/images/size/w2000/2020/05/1_KR71E-iu_Z5PNCUATg6XIA.png 2000w"
+            sizes="(max-width: 1000px) 400px, 700px"
+            loading="lazy"
+            src="../content/images/size/w600/2020/05/1_KR71E-iu_Z5PNCUATg6XIA.png"
+            alt="Camera Calibration with OpenCV"
+        />
+    </a>
+
+    <div class="post-card-content">
+
+        <a class="post-card-content-link" href="../camera-calibration-with-opencv/index.html">
+
+            <header class="post-card-header">
+                    <div class="post-card-primary-tag">computer-vision</div>
+                <h2 class="post-card-title">Camera Calibration with OpenCV</h2>
+            </header>
+
+            <section class="post-card-excerpt">
+                    <p>When we talk about camera calibration and Image distortion, we’re talking about what happens when a camera looks at 3D objects in the real world and transforms them into</p>
+            </section>
+
+        </a>
+
+        <footer class="post-card-meta">
+            <ul class="author-list">
+                <li class="author-list-item">
+            
+                    <div class="author-name-tooltip">
+                        Teja Kummarikuntla
+                    </div>
+            
+                    <a href="../author/teja/index.html" class="static-avatar">
+                        <img class="author-profile-image" src="../content/images/size/w100/2020/04/Screenshot--490-.png" alt="Teja Kummarikuntla" />
+                    </a>
+                </li>
+            </ul>
+            <div class="post-card-byline-content">
+                <span><a href="../author/teja/index.html">Teja Kummarikuntla</a></span>
+                <span class="post-card-byline-date"><time datetime="2019-02-09">9 Feb 2019</time> <span class="bull">&bull;</span> 7 min read</span>
+            </div>
+        </footer>
+
+    </div>
+
+</article>
+        </div>
+    </div>
+</aside>
+
+
+
+
+        <footer class="site-footer outer">
+            <div class="site-footer-content inner">
+                <section class="copyright"><a href="../index.html">tejakummarikuntla</a> &copy; 2020</section>
+                <nav class="site-footer-nav">
+                    <a href="../index.html">Latest Posts</a>
+                    <a href="https://www.facebook.com/teja.kummarikuntla" target="_blank" rel="noopener">Facebook</a>
+                    <a href="https://twitter.com/crossmux" target="_blank" rel="noopener">Twitter</a>
+                    <a href="https://ghost.org" target="_blank" rel="noopener">Ghost</a>
+                </nav>
+            </div>
+        </footer>
+
+    </div>
+
+
+    <script
+        src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+        crossorigin="anonymous">
+    </script>
+    <script src="../assets/built/casper.js@v=7e2804ec5d"></script>
+
+    <script>
+        // Parse the URL parameter
+        function getParameterByName(name, url) {
+            if (!url) url = window.location.href;
+            name = name.replace(/[\[\]]/g, "\\$&");
+            var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, " "));
+        }
+
+        // Give the parameter a variable name
+        var action = getParameterByName('action');
+
+        $(document).ready(function () {
+            if (action == 'subscribe') {
+                $('body').addClass("subscribe-success");
+            }
+
+            $('.subscribe-success-message .subscribe-close').click(function () {
+                $('.subscribe-success-message').addClass('close');
+            });
+
+            // Reset form on opening subscrion overlay
+            $('.subscribe-button').click(function() {
+                $('.subscribe-overlay form').removeClass();
+                $('.subscribe-email').val('');
+            });
+        });
+    </script>
+
+    <script>
+    $(document).ready(function () {
+        // FitVids - start
+        var $postContent = $(".post-full-content");
+        $postContent.fitVids();
+        // FitVids - end
+
+        // Replace nav with title on scroll - start
+        Casper.stickyNavTitle({
+            navSelector: '.site-nav-main',
+            titleSelector: '.post-full-title',
+            activeClass: 'nav-post-title-active'
+        });
+        // Replace nav with title on scroll - end
+
+        // Hover on avatar
+        var hoverTimeout;
+        $('.author-list-item').hover(function () {
+            var $this = $(this);
+
+            clearTimeout(hoverTimeout);
+
+            $('.author-card').removeClass('hovered');
+            $(this).children('.author-card').addClass('hovered');
+
+        }, function () {
+            var $this = $(this);
+
+            hoverTimeout = setTimeout(function () {
+                $this.children('.author-card').removeClass('hovered');
+            }, 800);
+        });
+    });
+</script>
+
+
+    
+
+</body>
+</html>

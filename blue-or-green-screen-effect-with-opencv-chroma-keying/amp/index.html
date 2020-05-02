@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html ⚡>
+<head>
+    <meta charset="utf-8">
+
+    <title>Blue or Green Screen Effect with OpenCV [Chroma keying]</title>
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+
+    <link rel="shortcut icon" href="../../favicon.ico" type="image/x-icon" />
+    <link rel="canonical" href="../index.html" />
+    <meta name="referrer" content="no-referrer-when-downgrade" />
+    
+    <meta property="og:site_name" content="tejakummarikuntla" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="Blue or Green Screen Effect with OpenCV [Chroma keying]" />
+    <meta property="og:description" content="Jump to Code with .ipynb Before we get into Chroma keying[ green screen effect ] it’s better to understand the underlying concept that making it possible with Open CV. Colour ThresholdsAs we treat Images as grids of pixels as a function of X and Y, we are gonna use that" />
+    <meta property="og:url" content="tejakummarikuntla.github.io/blog/blue-or-green-screen-effect-with-opencv-chroma-keying/" />
+    <meta property="og:image" content="tejakummarikuntla.github.io/blog/content/images/2020/05/1_PEELIgKtt9V_Q7heJFNy-g.png" />
+    <meta property="article:published_time" content="2019-05-01T16:00:00.000Z" />
+    <meta property="article:modified_time" content="2020-05-02T16:06:50.000Z" />
+    <meta property="article:tag" content="Image Processing" />
+    <meta property="article:tag" content="computer-vision" />
+    
+    <meta property="article:publisher" content="https://www.facebook.com/teja.kummarikuntla" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Blue or Green Screen Effect with OpenCV [Chroma keying]" />
+    <meta name="twitter:description" content="Jump to Code with .ipynb Before we get into Chroma keying[ green screen effect ] it’s better to understand the underlying concept that making it possible with Open CV. Colour ThresholdsAs we treat Images as grids of pixels as a function of X and Y, we are gonna use that" />
+    <meta name="twitter:url" content="tejakummarikuntla.github.io/blog/blue-or-green-screen-effect-with-opencv-chroma-keying/" />
+    <meta name="twitter:image" content="tejakummarikuntla.github.io/blog/content/images/2020/05/1_PEELIgKtt9V_Q7heJFNy-g.png" />
+    <meta name="twitter:label1" content="Written by" />
+    <meta name="twitter:data1" content="Teja Kummarikuntla" />
+    <meta name="twitter:label2" content="Filed under" />
+    <meta name="twitter:data2" content="Image Processing, computer-vision" />
+    <meta name="twitter:site" content="@crossmux" />
+    <meta name="twitter:creator" content="@crossmux" />
+    <meta property="og:image:width" content="820" />
+    <meta property="og:image:height" content="312" />
+    
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "publisher": {
+        "@type": "Organization",
+        "name": "tejakummarikuntla",
+        "url": "tejakummarikuntla.github.io/blog/",
+        "logo": "tejakummarikuntla.github.io/blog/content/images/2020/04/output-onlinepngtools--6-.png"
+    },
+    "author": {
+        "@type": "Person",
+        "name": "Teja Kummarikuntla",
+        "image": {
+            "@type": "ImageObject",
+            "url": "tejakummarikuntla.github.io/blog/content/images/2020/04/Screenshot--490-.png",
+            "width": 1033,
+            "height": 1078
+        },
+        "url": "tejakummarikuntla.github.io/blog/author/teja/",
+        "sameAs": [
+            "https://twitter.com/crossmux"
+        ]
+    },
+    "headline": "Blue or Green Screen Effect with OpenCV [Chroma keying]",
+    "url": "tejakummarikuntla.github.io/blog/blue-or-green-screen-effect-with-opencv-chroma-keying/",
+    "datePublished": "2019-05-01T16:00:00.000Z",
+    "dateModified": "2020-05-02T16:06:50.000Z",
+    "image": {
+        "@type": "ImageObject",
+        "url": "tejakummarikuntla.github.io/blog/content/images/2020/05/1_PEELIgKtt9V_Q7heJFNy-g.png",
+        "width": 820,
+        "height": 312
+    },
+    "keywords": "Image Processing, computer-vision",
+    "description": "Jump to Code [https://github.com/tejakummarikuntla/blue-screen-effect-OpenCV/] \nwith .ipynb\n\n\n--------------------------------------------------------------------------------\n\nBefore we get into Chroma keying[ green screen effect ] it’s better to\nunderstand the underlying concept that making it possible with Open CV.\n\nColour Thresholds\nAs we treat Images as grids of pixels as a function of X and Y, we are gonna use\nthat information of colors to isolate a particular area.selecting areas of\nintres",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "tejakummarikuntla.github.io/blog/"
+    }
+}
+    </script>
+
+    <meta name="generator" content="Ghost 3.13" />
+    <link rel="alternate" type="application/rss+xml" title="tejakummarikuntla" href="../../rss/index.html" />
+
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,600,400" />
+    <style amp-custom>html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}body{margin:0}article,aside,details,figcaption,figure,footer,header,main,menu,nav,section,summary{display:block}audio,canvas,progress,video{display:inline-block;vertical-align:baseline}audio:not([controls]){display:none;height:0}[hidden],template{display:none}a{background-color:transparent}a:active,a:hover{outline:0}abbr[title]{border-bottom:1px dotted}b,strong{font-weight:bold}dfn{font-style:italic}h1{margin:0.67em 0;font-size:2em}mark{background:#ff0;color:#000}small{font-size:80%}sub,sup{position:relative;vertical-align:baseline;font-size:75%;line-height:0}sup{top:-0.5em}sub{bottom:-0.25em}img{border:0}amp-img{border:0}svg:not(:root){overflow:hidden}figure{margin:1em 40px}hr{box-sizing:content-box;height:0}pre{overflow:auto}code,kbd,pre,samp{font-family:monospace, monospace;font-size:1em}button,input,optgroup,select,textarea{margin:0;color:inherit;font:inherit}button{overflow:visible}button,select{text-transform:none}button,html input[type="button"],input[type="reset"],input[type="submit"]{cursor:pointer;-webkit-appearance:button}button[disabled],html input[disabled]{cursor:default}button::-moz-focus-inner,input::-moz-focus-inner{padding:0;border:0}input{line-height:normal}input[type="checkbox"],input[type="radio"]{box-sizing:border-box;padding:0}input[type="number"]::-webkit-inner-spin-button,input[type="number"]::-webkit-outer-spin-button{height:auto}input[type="search"]{-webkit-appearance:textfield}input[type="search"]::-webkit-search-cancel-button,input[type="search"]::-webkit-search-decoration{-webkit-appearance:none}fieldset{margin:0 2px;padding:0.35em 0.625em 0.75em;border:1px solid #c0c0c0}legend{padding:0;border:0}textarea{overflow:auto}optgroup{font-weight:bold}table{border-spacing:0;border-collapse:collapse}td,th{padding:0}html{max-height:100%;height:100%;font-size:62.5%;-webkit-tap-highlight-color:rgba(0, 0, 0, 0)}body{max-height:100%;height:100%;color:#3a4145;background:#f4f8fb;letter-spacing:0.01rem;font-family:"Merriweather", serif;font-size:1.8rem;line-height:1.75em;text-rendering:geometricPrecision;-webkit-font-feature-settings:"kern" 1;-moz-font-feature-settings:"kern" 1;-o-font-feature-settings:"kern" 1}::-moz-selection{background:#d6edff}::selection{background:#d6edff}h1,h2,h3,h4,h5,h6{margin:0 0 0.3em 0;color:#2e2e2e;font-family:"Open Sans", sans-serif;line-height:1.15em;text-rendering:geometricPrecision;-webkit-font-feature-settings:"dlig" 1, "liga" 1, "lnum" 1, "kern" 1;-moz-font-feature-settings:"dlig" 1, "liga" 1, "lnum" 1, "kern" 1;-o-font-feature-settings:"dlig" 1, "liga" 1, "lnum" 1, "kern" 1}h1{text-indent:-2px;letter-spacing:-1px;font-size:2.6rem}h2{letter-spacing:0;font-size:2.4rem}h3{letter-spacing:-0.6px;font-size:2.1rem}h4{font-size:1.9rem}h5{font-size:1.8rem}h6{font-size:1.8rem}a{color:#4a4a4a}a:hover{color:#111}p,ul,ol,dl{margin:0 0 2.5rem 0;font-size:1.5rem;text-rendering:geometricPrecision;-webkit-font-feature-settings:"liga" 1, "onum" 1, "kern" 1;-moz-font-feature-settings:"liga" 1, "onum" 1, "kern" 1;-o-font-feature-settings:"liga" 1, "onum" 1, "kern" 1}ol,ul{padding-left:2em}ol ol,ul ul,ul ol,ol ul{margin:0 0 0.4em 0;padding-left:2em}dl dt{float:left;clear:left;overflow:hidden;margin-bottom:1em;width:180px;text-align:right;text-overflow:ellipsis;white-space:nowrap;font-weight:700}dl dd{margin-bottom:1em;margin-left:200px}li{margin:0.4em 0}li li{margin:0}hr{display:block;margin:1.75em 0;padding:0;height:1px;border:0;border-top:#efefef 1px solid}blockquote{box-sizing:border-box;margin:1.75em 0 1.75em 0;padding:0 0 0 1.75em;border-left:#4a4a4a 0.4em solid;-moz-box-sizing:border-box}blockquote p{margin:0.8em 0;font-style:italic}blockquote small{display:inline-block;margin:0.8em 0 0.8em 1.5em;color:#ccc;font-size:0.9em}blockquote small:before{content:"\2014 \00A0"}blockquote cite{font-weight:700}blockquote cite a{font-weight:normal}mark{background-color:#fdffb6}code,tt{padding:1px 3px;border:#e3edf3 1px solid;background:#f7fafb;border-radius:2px;white-space:pre-wrap;font-family:Inconsolata, monospace, sans-serif;font-size:0.85em;font-feature-settings:"liga" 0;-webkit-font-feature-settings:"liga" 0;-moz-font-feature-settings:"liga" 0}pre{overflow:auto;box-sizing:border-box;margin:0 0 1.75em 0;padding:10px;width:100%;border:#e3edf3 1px solid;background:#f7fafb;border-radius:3px;white-space:pre;font-family:Inconsolata, monospace, sans-serif;font-size:0.9em;-moz-box-sizing:border-box}pre code,pre tt{padding:0;border:none;background:transparent;white-space:pre-wrap;font-size:inherit}kbd{display:inline-block;margin-bottom:0.4em;padding:1px 8px;border:#ccc 1px solid;background:#f4f4f4;border-radius:4px;box-shadow:0 1px 0 rgba(0, 0, 0, 0.2), 0 1px 0 0 #fff inset;color:#666;text-shadow:#fff 0 1px 0;font-size:0.9em;font-weight:700}table{box-sizing:border-box;margin:1.75em 0;max-width:100%;width:100%;background-color:transparent;-moz-box-sizing:border-box}table th,table td{padding:8px;border-top:#efefef 1px solid;vertical-align:top;text-align:left;line-height:20px}table th{color:#000}table caption + thead tr:first-child th,table caption + thead tr:first-child td,table colgroup + thead tr:first-child th,table colgroup + thead tr:first-child td,table thead:first-child tr:first-child th,table thead:first-child tr:first-child td{border-top:0}table tbody + tbody{border-top:#efefef 2px solid}table table table{background-color:#fff}table tbody > tr:nth-child(odd) > td,table tbody > tr:nth-child(odd) > th{background-color:#f6f6f6}table.plain tbody > tr:nth-child(odd) > td,table.plain tbody > tr:nth-child(odd) > th{background:transparent}iframe,amp-iframe,.fluid-width-video-wrapper{display:block;margin:1.75em 0}.fluid-width-video-wrapper iframe,.fluid-width-video-wrapper amp-iframe{margin:0}textarea,select,input{margin:0 0 5px 0;padding:6px 9px;width:260px;outline:0;border:#e7eef2 1px solid;background:#fff;border-radius:4px;box-shadow:none;font-family:"Open Sans", sans-serif;font-size:1.6rem;line-height:1.4em;font-weight:100;-webkit-appearance:none}textarea{min-width:250px;min-height:80px;max-width:340px;width:100%;height:auto}input[type="text"]:focus,input[type="email"]:focus,input[type="search"]:focus,input[type="tel"]:focus,input[type="url"]:focus,input[type="password"]:focus,input[type="number"]:focus,input[type="date"]:focus,input[type="month"]:focus,input[type="week"]:focus,input[type="time"]:focus,input[type="datetime"]:focus,input[type="datetime-local"]:focus,textarea:focus{outline:none;outline-width:0;border:#bbc7cc 1px solid;background:#fff}select{width:270px;height:30px;line-height:30px}.clearfix:before,.clearfix:after{content:" ";display:table}.clearfix:after{clear:both}.clearfix{zoom:1}.main-header{position:relative;display:table;overflow:hidden;box-sizing:border-box;width:100%;height:50px;background:#5ba4e5 no-repeat center center;background-size:cover;text-align:left;-webkit-box-sizing:border-box;-moz-box-sizing:border-box}.content{background:#fff;padding-top:15px}.blog-title,.content{margin:auto;max-width:600px}.blog-title a{display:block;padding-right:16px;padding-left:16px;height:50px;color:#fff;text-decoration:none;font-family:"Open Sans", sans-serif;font-size:16px;line-height:50px;font-weight:600}.post{position:relative;margin-top:0;margin-right:16px;margin-left:16px;padding-bottom:0;max-width:100%;border-bottom:#ebf2f6 1px solid;word-wrap:break-word;font-size:0.95em;line-height:1.65em}.post-header{margin-bottom:1rem}.post-title{margin-bottom:0}.post-title a{text-decoration:none}.post-meta{display:block;margin:3px 0 0 0;color:#9eabb3;font-family:"Open Sans", sans-serif;font-size:1.3rem;line-height:2.2rem}.post-meta a{color:#9eabb3;text-decoration:none}.post-meta a:hover{text-decoration:underline}.post-meta .author{margin:0;font-size:1.3rem;line-height:1.3em}.post-date{display:inline-block;text-transform:uppercase;white-space:nowrap;font-size:1.2rem;line-height:1.2em}.post-image{margin:0;padding-top:3rem;padding-bottom:30px;border-top:1px #E8E8E8 solid}.post-content amp-img,.post-content amp-anim{position:relative;left:50%;display:block;padding:0;min-width:0;max-width:112%;width:calc(100% + 32px);height:auto;transform:translateX(-50%);-webkit-transform:translateX(-50%);-ms-transform:translateX(-50%)}.footnotes{font-size:1.3rem;line-height:1.6em;font-style:italic}.footnotes li{margin:0.6rem 0}.footnotes p{margin:0}.footnotes p a:last-child{text-decoration:none}.site-footer{position:relative;margin:0 auto 20px auto;padding:1rem 15px;max-width:600px;color:rgba(0,0,0,0.5);font-family:"Open Sans", sans-serif;font-size:1.1rem;line-height:1.75em}.site-footer a{color:rgba(0,0,0,0.5);text-decoration:none;font-weight:bold}.site-footer a:hover{border-bottom:#bbc7cc 1px solid}.poweredby{display:block;float:right;width:45%;text-align:right}.copyright{display:block;float:left;width:45%}</style>
+
+    <style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
+    <script async src="https://cdn.ampproject.org/v0.js"></script>
+
+    
+
+</head>
+
+<body class="amp-template">
+    <header class="main-header">
+        <nav class="blog-title">
+            <a href="../../index.html">tejakummarikuntla</a>
+        </nav>
+    </header>
+
+    <main class="content" role="main">
+        <article class="post">
+
+            <header class="post-header">
+                <h1 class="post-title">Blue or Green Screen Effect with OpenCV [Chroma keying]</h1>
+                <section class="post-meta">
+                    <p class="author">by <a href="../../author/teja/index.html">Teja Kummarikuntla</a></p>
+                    <time class="post-date" datetime="2019-05-01">2019-05-01</time>
+                </section>
+            </header>
+            <figure class="post-image">
+                <amp-img src="tejakummarikuntla.github.io/blog/content/images/2020/05/1_PEELIgKtt9V_Q7heJFNy-g.png" width="600" height="400" layout="responsive"></amp-img>
+            </figure>
+            <section class="post-content">
+
+                <p>Jump to <a href="https://github.com/tejakummarikuntla/blue-screen-effect-OpenCV/" rel="noopener nofollow">Code</a> with .ipynb</p><hr></hr><figure class="kg-card kg-image-card"><amp-img src="https://cdn-images-1.medium.com/max/1000/1*PEELIgKtt9V_Q7heJFNy-g.png" class="kg-image" width="820" height="312" layout="responsive"></amp-img></figure><p>Before we get into Chroma keying[ green screen effect ] it’s better to understand the underlying concept that making it possible with Open CV.</p><h3 id="colour-thresholds">Colour Thresholds</h3><p>As we treat Images as grids of pixels as a function of X and Y, we are gonna use that information of colors to isolate a particular area.<code>selecting areas of intrest.</code> we’ll be selecting an area of interest using Colour Thresholds,</p><p>With Colour Thresholds we can able to remove parts of an image that falls under a specific color range. The common use is with Blue/Green Screen.</p><p>A Blue Screen similar to a green screen is used to layer two images or video streams based on identifying and replacing a large blue area.</p><p>We’re gonna use Blue Screen to film now ;p. So, how does it work?</p><p>The first step is to isolate the blue background and replace that blue area with an image of your choosing.</p><hr></hr><figure class="kg-card kg-image-card kg-card-hascaption"><amp-img src="https://cdn-images-1.medium.com/max/750/1*P7ypHvfCRifzVtg26EP5tA.jpeg" class="kg-image" width="750" height="421" layout="responsive"></amp-img><figcaption>source: <a href="https://www.youtube.com/channel/UCchJggclQ1aXyHI9kPrqhAg" data-href="https://www.youtube.com/channel/UCchJggclQ1aXyHI9kPrqhAg" class="markup--anchor markup--figure-anchor" rel="noopener" target="_blank">Crude Animation</a> (ctree_bluescreen.jpg)</figcaption></figure><p>We’ll be starting with an image of a Christmas tree on a Blue screen background.</p><p>We first have to identify the blue region then later we’ll replace it with a background image of our choosing.</p><hr></hr><pre><code>import cv2
+import matplotlib.pyplot as plt
+import numpy as np
+image = cv2.imread('images/ctree_bluescreen.jpg')</code></pre><p><code>cv2.imread()</code> is used to read an image which takes the image location as an argument, where the image <code>ctree_bluescreen.jpg</code> is in the folder called <code>images.</code></p><pre><code>print('Image type: ', type(image),
+      'Image Dimensions : ', image.shape)</code></pre><p>This gives you the result as :</p><p><code>Image type:</code> &lt;class ‘numpy.ndarray’&gt; <code>Image Dimesnsions:</code> (720, 1280, 3)</p><p>The openCV library reads the image as an array, also known as a grid or matrix of pixel values. The shape of the image, which contains three values that represent the dimensions of the image array,</p><p><code>720:</code> height in pixels</p><p><code>816:</code> width in pixels</p><p><code>3:</code> Colour Components for Red, Green and Blue (RGB) valuesimage_copy = np.copy(image)</p><pre><code>image_copy = np.copy(image)
+image_copy = cv2.cvtColor(image_copy, cv2.COLOR_BGR2RGB)
+plt.imshow(image_copy)</code></pre><figure class="kg-card kg-image-card kg-card-hascaption"><amp-img src="https://cdn-images-1.medium.com/max/750/1*Xeyfrp-B2hgmV489VQR-4g.png" class="kg-image" width="750" height="449" layout="responsive"></amp-img><figcaption>Output for the above code snippet</figcaption></figure><p>Open CV reads in colour images as BGR(blue, green, red) images, not as RGB(red, blue, green). So, the Red and Blue colours are in reverse order and pyplot reflect this switch and results in a differently coloured image than original.</p><p>So, before we display the image let’s make a copy of the original image and use Open CV to change colour from BGR to RGB. It’s good practice to always make a copy of the image you’re working with. This way any transformation you’ll apply to the copy will not affect the original image, so it’s easier to undo a step or try something new.</p><p>Now, on this copied image <code>image_copy</code> we can perform a colour transformation using Open CV function <code>cvtColor()</code> , this takes a source image and colour conversion code, in this case, it is just BGR2RGB and then outputs the desired image.</p><hr></hr><h3 id="defining-the-colour-threshold">Defining the Colour Threshold</h3><p>Now, we need to create a colour threshold to remove the desired blue region.</p><p>To create a Colour Threshold, we need to define lower and upper bounds for the colour that we need to isolate and remove -blue</p><p>we’ll be using the colour threshold values to eventually select the blue screen area that contains this range of colour values and get rid of it.</p><pre><code>lower_blue = np.array([0, 0, 100])     ##[R value, G value, B value]
+upper_blue = np.array([120, 100, 255])</code></pre><p>So, we defined the low threshold that contains the lowest values of red, green and blue that are still considered part of the blue screen background.</p><p>In <code>lower_blue</code> , for red and green, we set as 0, meaning it’s okay to have no red or green. But, the lowest value for blue should still be quite high, let’s say around 100.</p><p>Now, for <code>upper_blue</code>defined the upper threshold to allow little more red and green, and set the highest value for blue to <code>255</code>. Any colour within this low and high range will be an intense blue colour. this is just an estimation though. So, if we find that this range isn’t finding the blue screen area we want, we can get back and change the values.</p><hr></hr><h3 id="creating-a-mask">Creating a Mask</h3><p>We are gonna use the colour bound that are just created to create an image mask.</p><p>Masks are very common way to isolate a <code>selected area of intrest</code> and do something with that area. We can create a mask over blue area using Open CV’s <code>inRange()</code> function.</p><pre><code>mask = cv2.inRange(image_copy, lower_blue, upper_blue)
+plt.imshow(mask, cmap='gray')</code></pre><p>The <code>inRange()</code> function takes in an image in our lower and upper colour bounds and defines a mask by asking if the colour value of each image pixel falls in the range of the lower and upper colour thresholds. If it does fall in this range, the mask will be allowed to be displayed and if not it will block it out and turn the pixel black.</p><p>In fact, we can visualize the mask by plotting it as we would an image.</p><figure class="kg-card kg-image-card kg-card-hascaption"><amp-img src="https://cdn-images-1.medium.com/max/1000/1*mtSrH8zBZyTlSIPN7hGJYg.png" class="kg-image" width="766" height="448" layout="responsive"></amp-img><figcaption>plt.imshow(mask, cmap=’gray’)</figcaption></figure><p>The whole white area is where the image will be allowed to show through and the black will be blocked out. In numerical values, we can look at this mask as a 2D grid with the same dimensions as our image <code>720</code> pixels in height and <code>816</code> pixels in width.</p><p>Each coordinate in the mask has a value of either 255 for white and 0 for black, sort of like a grayscale image. And when we look at this mask we can see that it has a white area where the blue screen background is and the black area where the Christmas tree is.</p><p>Now, the first thing we need to do is let the Christmas tree show through and block the blue screen background.</p><hr></hr><pre><code>masked_image = np.copy(image_copy)
+masked_image[mask != 0] = [0, 0, 0]
+plt.imshow(masked_image)</code></pre><p>First, to mask the image we are gonna make another image copy called <code>maksed_image</code> of our colour changed image copy, just in case I want to change the mask later on.</p><p>Then one way to select the blue screen is by asking for the part of that image that overlaps with the part of the mask that is white or not black. That is we’ll select the part of the image where the area of the mask is not equal to zero, using <code>mask != 0</code> . And to block this background area out we then set the pixels to black. Now when we display our result, that should show the Christmas tree area is the only area that should show through.</p><figure class="kg-card kg-image-card kg-card-hascaption"><amp-img src="https://cdn-images-1.medium.com/max/1000/1*hsQ8XdFTqMmopzUxqEqDWw.png" class="kg-image" width="760" height="446" layout="responsive"></amp-img><figcaption>plt.imshow(masked_image)</figcaption></figure><p>The Blue screen background is gone, we might even change our colour threshold to get rid of any few blue spots, we can try it by increasing the highest green value and decreasing the low blue value, that should capture a larger range of blue.</p><hr></hr><h3 id="mask-and-add-background-image">Mask and Add Background Image</h3><p>Now, we just have one last step which is to apply a background to this image. The process is fairly similar.</p><pre><code>background_image = cv2.imread('images/treeBackground.jpg')
+background_image = cv2.cvtColor(background_image, cv2.COLOR_BGR2RGB)
+
+crop_background = background_image[0:720, 0:1280]
+
+crop_background[mask == 0] = [0, 0, 0]
+
+plt.imshow(crop_background)</code></pre><p>First, we’ll read in an image of outer space and convert into RGB Colour. We’ll also crop it so that it’s the same size as our tree image <code>720 x 1280 pixels</code> , we are calling this image as <code>crop_background</code> , then we apply the mask, this time using the opposite mask, mean we want the background to show through and not the Christmas tree area. If we look back at the mak in this case we’re blocking the part of the background image where the mask is equal to zero.</p><p>Just to make sure we got this masking correct, we’re gonna plot the resulting image.</p><figure class="kg-card kg-image-card kg-card-hascaption"><amp-img src="https://cdn-images-1.medium.com/max/1000/1*rIxWdP6mUPRmuUgwwUT5mQ.png" class="kg-image" width="762" height="448" layout="responsive"></amp-img><figcaption>plt.imshow(crop_background)</figcaption></figure><p>The result is the background with the Tree cut out.</p><p>Then finally, we just need to add these two images together. Since the black area is equivalent to zeros in pixel colour value, a simple addition will work.</p><pre><code>final_image = crop_background + masked_image
+plt.imshow(final_image)</code></pre><p>Now, when we plot the complete image I got the Christmas tree with new Background.🙌</p><figure class="kg-card kg-image-card kg-card-hascaption"><amp-img src="https://cdn-images-1.medium.com/max/1000/1*1BT5fsCtfxh0n9mUvh7vhA.png" class="kg-image" width="770" height="456" layout="responsive"></amp-img><figcaption>plt.imshow(final_image)</figcaption></figure><p>Originally Published at: <a href="https://medium.com/fnplus/blue-or-green-screen-effect-with-open-cv-chroma-keying-94d4a6ab2743?source=---------2------------------">Medium</a></p><figure class="kg-card kg-image-card"><amp-img src="https://cdn-images-1.medium.com/max/1000/1*iGomvgpRqhDrvJaaxrtT2Q.png" class="kg-image" width="600" height="200" layout="responsive"></amp-img></figure>
+
+            </section>
+
+        </article>
+    </main>
+    <footer class="site-footer clearfix">
+        <section class="copyright"><a href="../../index.html">tejakummarikuntla</a> &copy; 2020</section>
+        <section class="poweredby">Proudly published with <a href="https://ghost.org">Ghost</a></section>
+    </footer>
+</body>
+</html>

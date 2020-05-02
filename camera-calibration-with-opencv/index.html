@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>Camera Calibration with OpenCV</title>
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" type="text/css" href="../assets/built/screen.css@v=7e2804ec5d.css" />
+
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon" />
+    <link rel="canonical" href="index.html" />
+    <meta name="referrer" content="no-referrer-when-downgrade" />
+    <link rel="amphtml" href="amp/index.html" />
+    
+    <meta property="og:site_name" content="tejakummarikuntla" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="Camera Calibration with OpenCV" />
+    <meta property="og:description" content="When we talk about camera calibration and Image distortion, we’re talking about what happens when a camera looks at 3D objects in the real world and transforms them into a 2D image. That transformation isn’t perfect. For example, here’s an image of a road and some images" />
+    <meta property="og:url" content="tejakummarikuntla.github.io/blog/camera-calibration-with-opencv/" />
+    <meta property="og:image" content="tejakummarikuntla.github.io/blog/content/images/2020/05/1_KR71E-iu_Z5PNCUATg6XIA.png" />
+    <meta property="article:published_time" content="2019-02-09T15:55:00.000Z" />
+    <meta property="article:modified_time" content="2020-05-02T16:11:01.000Z" />
+    <meta property="article:tag" content="computer-vision" />
+    
+    <meta property="article:publisher" content="https://www.facebook.com/teja.kummarikuntla" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Camera Calibration with OpenCV" />
+    <meta name="twitter:description" content="When we talk about camera calibration and Image distortion, we’re talking about what happens when a camera looks at 3D objects in the real world and transforms them into a 2D image. That transformation isn’t perfect. For example, here’s an image of a road and some images" />
+    <meta name="twitter:url" content="tejakummarikuntla.github.io/blog/camera-calibration-with-opencv/" />
+    <meta name="twitter:image" content="tejakummarikuntla.github.io/blog/content/images/2020/05/1_KR71E-iu_Z5PNCUATg6XIA.png" />
+    <meta name="twitter:label1" content="Written by" />
+    <meta name="twitter:data1" content="Teja Kummarikuntla" />
+    <meta name="twitter:label2" content="Filed under" />
+    <meta name="twitter:data2" content="computer-vision" />
+    <meta name="twitter:site" content="@crossmux" />
+    <meta name="twitter:creator" content="@crossmux" />
+    <meta property="og:image:width" content="658" />
+    <meta property="og:image:height" content="269" />
+    
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "publisher": {
+        "@type": "Organization",
+        "name": "tejakummarikuntla",
+        "url": "tejakummarikuntla.github.io/blog/",
+        "logo": "tejakummarikuntla.github.io/blog/content/images/2020/04/output-onlinepngtools--6-.png"
+    },
+    "author": {
+        "@type": "Person",
+        "name": "Teja Kummarikuntla",
+        "image": {
+            "@type": "ImageObject",
+            "url": "tejakummarikuntla.github.io/blog/content/images/2020/04/Screenshot--490-.png",
+            "width": 1033,
+            "height": 1078
+        },
+        "url": "tejakummarikuntla.github.io/blog/author/teja/",
+        "sameAs": [
+            "https://twitter.com/crossmux"
+        ]
+    },
+    "headline": "Camera Calibration with OpenCV",
+    "url": "tejakummarikuntla.github.io/blog/camera-calibration-with-opencv/",
+    "datePublished": "2019-02-09T15:55:00.000Z",
+    "dateModified": "2020-05-02T16:11:01.000Z",
+    "image": {
+        "@type": "ImageObject",
+        "url": "tejakummarikuntla.github.io/blog/content/images/2020/05/1_KR71E-iu_Z5PNCUATg6XIA.png",
+        "width": 658,
+        "height": 269
+    },
+    "keywords": "computer-vision",
+    "description": "When we talk about camera calibration and Image distortion, we’re talking about\nwhat happens when a camera looks at 3D objects in the real world and transforms\nthem into a 2D image. That transformation isn’t perfect.\n\nFor example, here’s an image of a road and some images taken through the\ndifferent camera lens that slightly distorted.\n\nAn original picture of the roadDistorted versions of the above picture by\na cameraIn these distorted images, you can see that the edges of the lanes are\nbent and",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "tejakummarikuntla.github.io/blog/"
+    }
+}
+    </script>
+
+    <meta name="generator" content="Ghost 3.13" />
+    <link rel="alternate" type="application/rss+xml" title="tejakummarikuntla" href="../rss/index.html" />
+
+</head>
+<body class="post-template tag-computer-vision">
+
+    <div class="site-wrapper">
+
+        
+
+<header class="site-header">
+    <div class="outer site-nav-main">
+    <div class="inner">
+        <nav class="site-nav">
+    <div class="site-nav-left-wrapper">
+        <div class="site-nav-left">
+                <a class="site-nav-logo" href="../index.html"><img src="../content/images/2020/04/output-onlinepngtools--6-.png" alt="tejakummarikuntla" /></a>
+            <div class="site-nav-content">
+                    <ul class="nav" role="menu">
+    <li class="nav-home" role="menuitem"><a href="../index.html">Home</a></li>
+    <li class="nav-tag" role="menuitem"><a href="../tag/data-science/index.html">Tag</a></li>
+    <li class="nav-author" role="menuitem"><a href="../author/teja/index.html">Author</a></li>
+    <li class="nav-github" role="menuitem"><a href="https://www.github.com/tejakummarikuntla">GitHub</a></li>
+    <li class="nav-notes" role="menuitem"><a href="https://tejakummarikuntla.github.io/notes">Notes</a></li>
+</ul>
+
+                    <span class="nav-post-title ">Camera Calibration with OpenCV</span>
+            </div>
+        </div>
+    </div>
+    <div class="site-nav-right">
+            <div class="social-links">
+                    <a class="social-link social-link-fb" href="https://www.facebook.com/teja.kummarikuntla" title="Facebook" target="_blank" rel="noopener"><svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="M16 0c8.837 0 16 7.163 16 16s-7.163 16-16 16S0 24.837 0 16 7.163 0 16 0zm5.204 4.911h-3.546c-2.103 0-4.443.885-4.443 3.934.01 1.062 0 2.08 0 3.225h-2.433v3.872h2.509v11.147h4.61v-11.22h3.042l.275-3.81h-3.397s.007-1.695 0-2.187c0-1.205 1.253-1.136 1.329-1.136h2.054V4.911z" /></svg></a>
+                    <a class="social-link social-link-tw" href="https://twitter.com/crossmux" title="Twitter" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M30.063 7.313c-.813 1.125-1.75 2.125-2.875 2.938v.75c0 1.563-.188 3.125-.688 4.625a15.088 15.088 0 0 1-2.063 4.438c-.875 1.438-2 2.688-3.25 3.813a15.015 15.015 0 0 1-4.625 2.563c-1.813.688-3.75 1-5.75 1-3.25 0-6.188-.875-8.875-2.625.438.063.875.125 1.375.125 2.688 0 5.063-.875 7.188-2.5-1.25 0-2.375-.375-3.375-1.125s-1.688-1.688-2.063-2.875c.438.063.813.125 1.125.125.5 0 1-.063 1.5-.25-1.313-.25-2.438-.938-3.313-1.938a5.673 5.673 0 0 1-1.313-3.688v-.063c.813.438 1.688.688 2.625.688a5.228 5.228 0 0 1-1.875-2c-.5-.875-.688-1.813-.688-2.75 0-1.063.25-2.063.75-2.938 1.438 1.75 3.188 3.188 5.25 4.25s4.313 1.688 6.688 1.813a5.579 5.579 0 0 1 1.5-5.438c1.125-1.125 2.5-1.688 4.125-1.688s3.063.625 4.188 1.813a11.48 11.48 0 0 0 3.688-1.375c-.438 1.375-1.313 2.438-2.563 3.188 1.125-.125 2.188-.438 3.313-.875z"/></svg>
+</a>
+            </div>
+                <a class="rss-button" href="https://feedly.com/i/subscription/feed/tejakummarikuntla.github.io/blog/rss/" title="RSS" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><circle cx="6.18" cy="17.82" r="2.18"/><path d="M4 4.44v2.83c7.03 0 12.73 5.7 12.73 12.73h2.83c0-8.59-6.97-15.56-15.56-15.56zm0 5.66v2.83c3.9 0 7.07 3.17 7.07 7.07h2.83c0-5.47-4.43-9.9-9.9-9.9z"/></svg>
+</a>
+
+    </div>
+</nav>
+    </div>
+</div></header>
+
+
+<main id="site-main" class="site-main outer">
+    <div class="inner">
+
+        <article class="post-full post tag-computer-vision ">
+
+            <header class="post-full-header">
+
+                <section class="post-full-tags">
+                    <a href="../tag/computer-vision/index.html">computer-vision</a>
+                </section>
+
+                <h1 class="post-full-title">Camera Calibration with OpenCV</h1>
+
+
+                <div class="post-full-byline">
+
+                    <section class="post-full-byline-content">
+
+                        <ul class="author-list">
+                            <li class="author-list-item">
+
+                                <div class="author-card">
+                                    <img class="author-profile-image" src="../content/images/size/w100/2020/04/Screenshot--490-.png" alt="Teja Kummarikuntla" />
+                                    <div class="author-info">
+                                        <h2>Teja Kummarikuntla</h2>
+                                        <p>Read <a href="../author/teja/index.html">more posts</a> by this author.</p>
+                                    </div>
+                                </div>
+
+                                <a href="../author/teja/index.html" class="author-avatar">
+                                    <img class="author-profile-image" src="../content/images/size/w100/2020/04/Screenshot--490-.png" alt="Teja Kummarikuntla" />
+                                </a>
+
+                            </li>
+                        </ul>
+
+                        <section class="post-full-byline-meta">
+                            <h4 class="author-name"><a href="../author/teja/index.html">Teja Kummarikuntla</a></h4>
+                            <div class="byline-meta-content">
+                                <time class="byline-meta-date" datetime="2019-02-09">9 Feb 2019</time>
+                                <span class="byline-reading-time"><span class="bull">&bull;</span> 7 min read</span>
+                            </div>
+                        </section>
+
+                    </section>
+
+
+                </div>
+            </header>
+
+            <figure class="post-full-image">
+                <img
+                    srcset="../content/images/size/w300/2020/05/1_KR71E-iu_Z5PNCUATg6XIA.png 300w,
+                           ../content/images/size/w600/2020/05/1_KR71E-iu_Z5PNCUATg6XIA.png 600w,
+                          ../content/images/size/w1000/2020/05/1_KR71E-iu_Z5PNCUATg6XIA.png 1000w,
+                         ../content/images/size/w2000/2020/05/1_KR71E-iu_Z5PNCUATg6XIA.png 2000w"
+                    sizes="(max-width: 800px) 400px,
+                        (max-width: 1170px) 1170px,
+                            2000px"
+                    src="../content/images/size/w2000/2020/05/1_KR71E-iu_Z5PNCUATg6XIA.png"
+                    alt="Camera Calibration with OpenCV"
+                />
+            </figure>
+
+            <section class="post-full-content">
+                <div class="post-content">
+                    <p>When we talk about camera calibration and Image distortion, we’re talking about what happens when a camera looks at 3D objects in the real world and transforms them into a 2D image. That transformation isn’t perfect.</p><p>For example, here’s an image of a road and some images taken through the different camera lens that slightly distorted.</p><figure class="kg-card kg-image-card kg-card-hascaption"><img src="https://cdn-images-1.medium.com/max/1000/1*O41plkKxm9SFvpQEbt_U3A.png" class="kg-image"><figcaption>An original picture of the&nbsp;road</figcaption></figure><figure class="kg-card kg-image-card kg-card-hascaption"><img src="https://cdn-images-1.medium.com/max/1000/1*BLv96PyejmWq1M5xjuKWUA.png" class="kg-image"><figcaption>Distorted versions of the above picture by a&nbsp;camera</figcaption></figure><p>In these distorted images, you can see that the edges of the lanes are bent and sort of rounded or stretched outward. Our first step in analyzing camera is to undo this distortion so we can get correct and useful information out of them.</p><h3 id="why-distortion">Why Distortion?</h3><p>Before we get into the code and start correcting for distortion, let’s get some intuition as to how this distortion occurs.</p><p>Here’s a simple model of a camera called the pinhole camera model.</p><figure class="kg-card kg-image-card"><img src="https://cdn-images-1.medium.com/max/1000/1*7Wh9L_VYNsPbBf5m2u0aXw.png" class="kg-image"></figure><p>When a camera looking at an object, it is looking at the world similar to how our eyes do. By focusing the light that’s reflected off of objects in the world. In this case, though a small pinhole, the camera focuses the light that’s reflected off to a 3D traffic sign and forms a 2D image at the back of the camera.</p><figure class="kg-card kg-image-card"><img src="https://cdn-images-1.medium.com/max/1000/1*R7Ec-32NFWWf9E7K9SgnRA.png" class="kg-image"></figure><p>In math, the Transformation from 3D object points, P of X, Y and Z to X and Y is done by a transformative matrix called the<strong> camera matrix(C)</strong>, we’ll be using this to calibrate the camera.</p><p>However, real cameras don’t use tiny pinholes; they use <strong>lenses</strong> to focus on multiple light rays at a time which allows them to quickly form images. But, lenses can introduce <strong>distortion</strong> too.</p><blockquote>Light lays often bend a little too much at the edges of a curved lens of a camera, and this creates the effect that distorts the edges of the images.</blockquote><h3 id="types-of-distortion">Types of Distortion</h3><p><strong><em>Radial Distortion:</em> </strong>Radial Distortion is the most common type that affects the images, In which when a camera captured pictures of straight lines appeared slightly curved or bent</p><figure class="kg-card kg-image-card kg-card-hascaption"><img src="https://cdn-images-1.medium.com/max/1000/1*fUl8POYptRmR4UzCM4Ox8Q.png" class="kg-image"><figcaption>Radially Distorted by a&nbsp;camera</figcaption></figure><p><strong><em>Tangential distortion: </em></strong>Tangential distortion occurs mainly because the lens is not parallely aligned to the imaging plane, that makes the image to be extended a little while longer or tilted, it makes the objects appear farther away or even closer than they actually are.</p><figure class="kg-card kg-image-card"><img src="https://cdn-images-1.medium.com/max/750/1*VaeeJWD3M3Qu2BbJ-hyuNg.png" class="kg-image"></figure><figure class="kg-card kg-image-card"><img src="https://cdn-images-1.medium.com/max/1000/1*bkF_vos8mQSFe7jy5JXsJA.png" class="kg-image"></figure><p>So, In order to reduce the distortion, luckily this distortion can be captured by five numbers called <strong>Distortion Coefficients</strong>, whose values reflect the amount of radial and tangential distortion in an image.</p><figure class="kg-card kg-image-card"><img src="https://cdn-images-1.medium.com/max/1000/1*kDPV6S_yLNE15lwuC9nxQA.png" class="kg-image"></figure><p>If we know the values of all the coefficients, we can use them to calibrate our camera and undistort the distorted images.</p><figure class="kg-card kg-image-card kg-card-hascaption"><img src="https://cdn-images-1.medium.com/max/1000/1*2dc3TTGhlqfQNp_XJY3xKw.png" class="kg-image"><figcaption>Undistorting the Distorted Image with Distortion Coefficients.</figcaption></figure><h3 id="measuring-distortion"><strong>Measuring Distortion</strong></h3><p>So, we know that the distortion changes the size and shape of the object in an image. But, how do we calibrate for that?</p><p>Well, we can take pictures of known shapes, then we’ll be able to detect and correct any distortion errors. We could choose any shape to calibrate our camera, and we’ll use a <strong>chessboard.</strong></p><figure class="kg-card kg-image-card"><img src="https://cdn-images-1.medium.com/max/750/1*kuatnf9nLE0vZsC0qF7pTQ.png" class="kg-image"></figure><p>A chessboard is great for calibration because it's regular, high contrast pattern makes it easy to detect automatically. And we know how an undistorted flat chessboard looks like. So, if we use our camera to take pictures of Chessboard at different angles</p><figure class="kg-card kg-image-card"><img src="https://cdn-images-1.medium.com/max/1000/1*owW3QvK-yQqdVLxkDQn53g.png" class="kg-image"></figure><h3 id="finding-corners">Finding Corners</h3><p>Open CV helps to automatically detect the corners and draw on it by <em>findChessboardCorners() </em>and<em> drawChessboardCorners()</em></p><p>Applying both functions to a sample image, results:</p><figure class="kg-card kg-image-card kg-card-hascaption"><img src="https://cdn-images-1.medium.com/max/1000/1*hoHEjJmK58OaO0xmnItayg.png" class="kg-image"><figcaption>After applying <em class="markup--em markup--figure-em">findChessboardCorners() </em>and<em class="markup--em markup--figure-em"> drawChessboardCorners()</em></figcaption></figure><pre><code>import numpy as np
+import cv2
+import matplotlib.pyplot as plt
+import matplotlib.image as mpimg
+# prepare object points
+nx = 8 number of inside corners in x
+ny = 6 number of inside corners in y
+# Make a list of calibration images
+fname = 'calibration_test.png'
+img = cv2.imread(fname)
+# Convert to grayscale
+gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+# Find the chessboard corners
+ret, corners = cv2.findChessboardCorners(gray, (nx, ny), None)
+# If found, draw corners
+if ret == True:
+    # Draw and display the corners
+    cv2.drawChessboardCorners(img, (nx, ny), corners, ret)
+    plt.imshow(img)</code></pre><h3 id="calibrating-the-camera">Calibrating The Camera</h3><p>In order to Calibrate the camera, the first step will be to read in calibration Images of a chess board. It’s recommended to use at least 20 images to get a reliable calibration, For this, we have a lot of images here, each chess board has eight by six corners to detect,</p><p>To calibrate a camera, OpenCV gives us the <strong><em>calibrateCamera()</em></strong> function</p><figure class="kg-card kg-image-card"><img src="https://cdn-images-1.medium.com/max/1000/1*-CDYzCBsuSB0uFN9GTd6yw.png" class="kg-image"></figure><p>This takes in Object points, Image points[<em>will understand these points in a moment</em>], and the shape of the image and using these inputs, it calculates and returns</p><figure class="kg-card kg-image-card"><img src="https://cdn-images-1.medium.com/max/1000/1*VVKMMo_RnI0bUw_6h4CXMA.png" class="kg-image"></figure><p><strong>mtx</strong>: Camera Matrix, which helps to transform 3D objects points to 2D image points.</p><p><strong>dist:</strong> distortion coefficient</p><p>It also returns the position of the camera in the world, with the values of rotation and translation vectors <strong>rvecs, tvecs</strong></p><p>The next function that we require is <strong><em>undistort()</em></strong>.</p><figure class="kg-card kg-image-card"><img src="https://cdn-images-1.medium.com/max/1000/1*4wjojfc9y4edjrBW_Va0Lw.png" class="kg-image"></figure><p>The undistort function takes in a distorted image, our camera matrix, and distortion coefficients and it returns an <strong>undistorted</strong>, often called <strong>destination image.</strong></p><p>In calibrateCamera() function we need object points and image points.</p><pre><code>import numpy as np 
+import cv2
+import matplotlib.pyplot as plt
+import matplotlib.image as mpimg
+#read in a calibration image
+img = mpimg.imread('../calibration_images/calibration1.jpg')
+plt.imshow(img)</code></pre><p>First, Done with numpy, openCV, and plotting imports, then we are gonna read the first image <code>calibarion1.jpg</code> and display it.</p><p>Now, we are gonna map the coordinates of the corners in the 2D displayed image which called as <code>imagepoints</code> , to the 3D coordinates of the real, undistorted chessboard corners, which are called as <code>objectpoinst</code>.</p><p>So, we are gonna set up two empty arrays to hold these points, <code>objectpoints</code> and <code>imagepoints</code></p><pre><code># Arrays to store object points and image points from all the images
+objpoints = [] # 3D points in real world space
+imgpoints = [] # 2D points in image plane</code></pre><p>The object points will all be the same, just the known object corners of the chess board corners for an eight by six board.</p><p>So, we are going to prepare these object points, first by creating six by eight points in an array, each with three columns for the x,y and z coordinates of each corner. We will then initialize all these to 0s using Numpy’s zeros function. The z coordinates will stay zero so leave that as it is but, for our first two columns x and y, use Numpy’s <code>mgrid</code> function to generate the coordinates that we want. <code>mgrid</code> returns the coordinate values for given grid size and shape those coordinates back into two columns, one for x and one for y:</p><pre><code># Prepare obj points, like (0, 0, 0), (1, 0, 0), (2, 0, 0)....., (7, 5, 0)
+objp = np.zeros((6*8,3), np.float32)
+objp[:,:,] =  mp.mgrid[0:8,0:6].T.reshape(-1,2) # x,y coordinates</code></pre><p>Next to create the <code>imagepoints</code>, we need to consider the distorted calibrated image and detect the corners of the board. OpenCV gives us an easy way to detect chessboard corners with a function called <code>findChessboardCorners()</code>, that returns the corners found in a grayscale image.</p><p>So, we will convert the image to greyscale and then pass that to the <code>findChessboardCorners()</code> function. This function takes in a <code>grayscle</code> image along with the dimensions of the chess board corners. In this case 8 by 6 and last parameter is for any flags; there are none in this example:</p><pre><code># Convert image to grayscale
+gray = cv2.cvtColor(img, cv2.COLOR_BRG2GRAY)
+# Find the Chesse board corners
+rer, corners = cv2.findChessboardCorners(gray, (8,6), None)</code></pre><p>If this function detects corners, we are gonna append those points to the image points array and also add our prepared object points <code>objp</code> to the <code>objectpoints</code> array. These object points will be the same for all of the calibration images since they represent a real chessboard.</p><pre><code># If corners are found, add object points, image points
+if ret == True:
+    imgpoints.append(corners)
+    objpoints.append(objp)</code></pre><p>Next, we also draw the detected corners, with a call to <code>drawChessboardCorners()</code> , that takes in our image, corner dimensions and corner points.</p><pre><code># If corners are found, add object points, image points
+if ret == True:
+    imgpoints.append(corners)
+    objpoints.append(objp)
+    
+    # Draw and display the corners
+    img = cv2.drawChessboardCorners(img, (8,6), corners, ret)
+    plt.imshow(img)</code></pre><figure class="kg-card kg-image-card"><img src="https://cdn-images-1.medium.com/max/1000/1*7ofE5NjiT0kqLv3YnFMriQ.png" class="kg-image"></figure><h3 id="correction-for-distortion">Correction for Distortion</h3><pre><code>import pickle
+import cv2
+import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib.image as mpimg
+# Read in the saved objpoints and imgpoints
+dist_pickle = pickle.load( open( "wide_dist_pickle.p", "rb" ) )
+objpoints = dist_pickle["objpoints"]
+imgpoints = dist_pickle["imgpoints"]
+# Read in an image
+img = cv2.imread('test_image.png')
+def cal_undistort(img, objpoints, imgpoints):
+    ret, mtx, dist, rvecs, tvecs = cv2.calibrateCamera(objpoints, imgpoints, img.shape[1:], None, None)
+    undist = cv2.undistort(img, mtx, dist, None, mtx)
+    return undist
+undistorted = cal_undistort(img, objpoints, imgpoints)
+f, (ax1, ax2) = plt.subplots(1, 2, figsize=(24, 9))
+f.tight_layout()
+ax1.imshow(img)
+ax1.set_title('Original Image', fontsize=50)
+ax2.imshow(undistorted)
+ax2.set_title('Undistorted Image', fontsize=50)
+plt.subplots_adjust(left=0., right=1, top=0.9, bottom=0.)</code></pre><p>Get <a href="https://s3-us-west-1.amazonaws.com/udacity-selfdrivingcar/files/Advanced_Lane_Finding_Images/correct_for_distortion/wide_dist_pickle.p" rel="noopener">distortion pickle file</a> and <a href="https://s3-us-west-1.amazonaws.com/udacity-selfdrivingcar/files/Advanced_Lane_Finding_Images/correct_for_distortion/test_image.png" rel="noopener">test image</a></p><p>Output result:</p><figure class="kg-card kg-image-card"><img src="https://cdn-images-1.medium.com/max/1000/1*KR71E-iu_Z5PNCUATg6XIA.png" class="kg-image"></figure><p>Reference: Udacity Self Driving Car Engineer Nanodegree</p><p>Originally Published at: <a href="https://medium.com/analytics-vidhya/camera-calibration-with-opencv-f324679c6eb7?source=---------3------------------">Analytics Vidhya</a></p><figure class="kg-card kg-image-card"><img src="https://cdn-images-1.medium.com/max/1000/1*GVQD9AZADus5ilHq8mOxJg.png" class="kg-image"></figure>
+                </div>
+            </section>
+
+
+
+        </article>
+
+    </div>
+</main>
+
+<aside class="read-next outer">
+    <div class="inner">
+        <div class="read-next-feed">
+                <article class="read-next-card">
+                    <header class="read-next-card-header">
+                        <h3><span>More in</span> <a href="../tag/computer-vision/index.html">computer-vision</a></h3>
+                    </header>
+                    <div class="read-next-card-content">
+                        <ul>
+                            <li>
+                                <h4><a href="../blue-or-green-screen-effect-with-opencv-chroma-keying/index.html">Blue or Green Screen Effect with OpenCV [Chroma keying]</a></h4>
+                                <div class="read-next-card-meta">
+                                    <p><time datetime="2019-05-01">1 May 2019</time> –
+                                        6 min read</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <footer class="read-next-card-footer">
+                        <a href="../tag/computer-vision/index.html">1 post
+                            →</a>
+                    </footer>
+                </article>
+
+                <article class="post-card post tag-image-processing tag-computer-vision ">
+
+    <a class="post-card-image-link" href="../blue-or-green-screen-effect-with-opencv-chroma-keying/index.html">
+        <img class="post-card-image"
+            srcset="../content/images/size/w300/2020/05/1_PEELIgKtt9V_Q7heJFNy-g.png 300w,
+                   ../content/images/size/w600/2020/05/1_PEELIgKtt9V_Q7heJFNy-g.png 600w,
+                  ../content/images/size/w1000/2020/05/1_PEELIgKtt9V_Q7heJFNy-g.png 1000w,
+                 ../content/images/size/w2000/2020/05/1_PEELIgKtt9V_Q7heJFNy-g.png 2000w"
+            sizes="(max-width: 1000px) 400px, 700px"
+            loading="lazy"
+            src="../content/images/size/w600/2020/05/1_PEELIgKtt9V_Q7heJFNy-g.png"
+            alt="Blue or Green Screen Effect with OpenCV [Chroma keying]"
+        />
+    </a>
+
+    <div class="post-card-content">
+
+        <a class="post-card-content-link" href="../blue-or-green-screen-effect-with-opencv-chroma-keying/index.html">
+
+            <header class="post-card-header">
+                    <div class="post-card-primary-tag">Image Processing</div>
+                <h2 class="post-card-title">Blue or Green Screen Effect with OpenCV [Chroma keying]</h2>
+            </header>
+
+            <section class="post-card-excerpt">
+                    <p>Jump to Code with .ipynb Before we get into Chroma keying[ green screen effect ] it’s better to understand the underlying concept that making it possible with Open CV. Colour</p>
+            </section>
+
+        </a>
+
+        <footer class="post-card-meta">
+            <ul class="author-list">
+                <li class="author-list-item">
+            
+                    <div class="author-name-tooltip">
+                        Teja Kummarikuntla
+                    </div>
+            
+                    <a href="../author/teja/index.html" class="static-avatar">
+                        <img class="author-profile-image" src="../content/images/size/w100/2020/04/Screenshot--490-.png" alt="Teja Kummarikuntla" />
+                    </a>
+                </li>
+            </ul>
+            <div class="post-card-byline-content">
+                <span><a href="../author/teja/index.html">Teja Kummarikuntla</a></span>
+                <span class="post-card-byline-date"><time datetime="2019-05-01">1 May 2019</time> <span class="bull">&bull;</span> 6 min read</span>
+            </div>
+        </footer>
+
+    </div>
+
+</article>
+
+                <article class="post-card post tag-github ">
+
+    <a class="post-card-image-link" href="../automate-github-issues-status-of-your-organization-with-webhooks/index.html">
+        <img class="post-card-image"
+            srcset="../content/images/size/w300/2020/04/1_-cOady3KKCe8TLcbBic13Q-1.png 300w,
+                   ../content/images/size/w600/2020/04/1_-cOady3KKCe8TLcbBic13Q-1.png 600w,
+                  ../content/images/size/w1000/2020/04/1_-cOady3KKCe8TLcbBic13Q-1.png 1000w,
+                 ../content/images/size/w2000/2020/04/1_-cOady3KKCe8TLcbBic13Q-1.png 2000w"
+            sizes="(max-width: 1000px) 400px, 700px"
+            loading="lazy"
+            src="../content/images/size/w600/2020/04/1_-cOady3KKCe8TLcbBic13Q-1.png"
+            alt="Automate GitHub Issues status of your organization with Webhooks"
+        />
+    </a>
+
+    <div class="post-card-content">
+
+        <a class="post-card-content-link" href="../automate-github-issues-status-of-your-organization-with-webhooks/index.html">
+
+            <header class="post-card-header">
+                    <div class="post-card-primary-tag">Github</div>
+                <h2 class="post-card-title">Automate GitHub Issues status of your organization with Webhooks</h2>
+            </header>
+
+            <section class="post-card-excerpt">
+                    <p>IntroductionLet’s suppose you are holding an organization which builds products and develop them, you are gonna use GitHub repositories(public/private) to keep all your code or resources safe</p>
+            </section>
+
+        </a>
+
+        <footer class="post-card-meta">
+            <ul class="author-list">
+                <li class="author-list-item">
+            
+                    <div class="author-name-tooltip">
+                        Teja Kummarikuntla
+                    </div>
+            
+                    <a href="../author/teja/index.html" class="static-avatar">
+                        <img class="author-profile-image" src="../content/images/size/w100/2020/04/Screenshot--490-.png" alt="Teja Kummarikuntla" />
+                    </a>
+                </li>
+            </ul>
+            <div class="post-card-byline-content">
+                <span><a href="../author/teja/index.html">Teja Kummarikuntla</a></span>
+                <span class="post-card-byline-date"><time datetime="2018-12-15">15 Dec 2018</time> <span class="bull">&bull;</span> 3 min read</span>
+            </div>
+        </footer>
+
+    </div>
+
+</article>
+        </div>
+    </div>
+</aside>
+
+
+
+
+        <footer class="site-footer outer">
+            <div class="site-footer-content inner">
+                <section class="copyright"><a href="../index.html">tejakummarikuntla</a> &copy; 2020</section>
+                <nav class="site-footer-nav">
+                    <a href="../index.html">Latest Posts</a>
+                    <a href="https://www.facebook.com/teja.kummarikuntla" target="_blank" rel="noopener">Facebook</a>
+                    <a href="https://twitter.com/crossmux" target="_blank" rel="noopener">Twitter</a>
+                    <a href="https://ghost.org" target="_blank" rel="noopener">Ghost</a>
+                </nav>
+            </div>
+        </footer>
+
+    </div>
+
+
+    <script
+        src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+        crossorigin="anonymous">
+    </script>
+    <script src="../assets/built/casper.js@v=7e2804ec5d"></script>
+
+    <script>
+        // Parse the URL parameter
+        function getParameterByName(name, url) {
+            if (!url) url = window.location.href;
+            name = name.replace(/[\[\]]/g, "\\$&");
+            var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, " "));
+        }
+
+        // Give the parameter a variable name
+        var action = getParameterByName('action');
+
+        $(document).ready(function () {
+            if (action == 'subscribe') {
+                $('body').addClass("subscribe-success");
+            }
+
+            $('.subscribe-success-message .subscribe-close').click(function () {
+                $('.subscribe-success-message').addClass('close');
+            });
+
+            // Reset form on opening subscrion overlay
+            $('.subscribe-button').click(function() {
+                $('.subscribe-overlay form').removeClass();
+                $('.subscribe-email').val('');
+            });
+        });
+    </script>
+
+    <script>
+    $(document).ready(function () {
+        // FitVids - start
+        var $postContent = $(".post-full-content");
+        $postContent.fitVids();
+        // FitVids - end
+
+        // Replace nav with title on scroll - start
+        Casper.stickyNavTitle({
+            navSelector: '.site-nav-main',
+            titleSelector: '.post-full-title',
+            activeClass: 'nav-post-title-active'
+        });
+        // Replace nav with title on scroll - end
+
+        // Hover on avatar
+        var hoverTimeout;
+        $('.author-list-item').hover(function () {
+            var $this = $(this);
+
+            clearTimeout(hoverTimeout);
+
+            $('.author-card').removeClass('hovered');
+            $(this).children('.author-card').addClass('hovered');
+
+        }, function () {
+            var $this = $(this);
+
+            hoverTimeout = setTimeout(function () {
+                $this.children('.author-card').removeClass('hovered');
+            }, 800);
+        });
+    });
+</script>
+
+
+    
+
+</body>
+</html>
